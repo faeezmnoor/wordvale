@@ -1,5 +1,7 @@
 # WordVale
 
+**Play it: <https://wordvale-two.vercel.app>**
+
 Turn any word list into a cozy pixel-art crossword you can play in the browser.
 
 Paste words, pick a theme, or bring your own list — WordVale weaves them into a

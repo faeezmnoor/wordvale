@@ -3,9 +3,33 @@
 The app is a static client-side build (`dist/`) — no server, no env vars, no secrets.
 Anything that serves static files works; Vercel is the default.
 
-Repo: <https://github.com/faeezmnoor/wordvale> (private)
+- **Live:** <https://wordvale-two.vercel.app> (public production URL)
+- **Repo:** <https://github.com/faeezmnoor/wordvale> (private)
+- **Dashboard:** <https://vercel.com/faeezmnoor/wordvale>
 
-## First deploy (one time, needs Faeez's Vercel account)
+First deployed 2026-08-12 with `vercel --prod`.
+
+## Redeploying
+
+```bash
+cd ~/dev/projects/wordvale
+npx vercel --prod        # deploys the current working tree
+```
+
+To get **automatic deploys on every push** instead, connect the GitHub repo in the Vercel
+dashboard (Project → Settings → Git). Until then, pushing to GitHub does *not* redeploy.
+
+## URL notes (worth knowing)
+
+- `https://wordvale-two.vercel.app` — **the public one; share this.** (`wordvale.vercel.app`
+  was taken, so Vercel assigned the `-two` suffix.)
+- `https://wordvale-faeezmnoor.vercel.app` and the per-deployment URLs
+  (`wordvale-<hash>-faeezmnoor.vercel.app`) sit behind Vercel's Deployment Protection SSO —
+  they return a login redirect for anyone who isn't signed in to your Vercel account. That's
+  fine for the shareable alias above, but don't send someone a per-deployment link.
+- A custom domain can be added under Project → Settings → Domains.
+
+## Original setup (for reference)
 
 **Option A — dashboard import (recommended: auto-deploys on every push)**
 
