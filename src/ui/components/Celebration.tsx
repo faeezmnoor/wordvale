@@ -1,4 +1,4 @@
-import { CoinSprite } from './Sprites'
+import { CoinSprite, RefreshSprite } from './Sprites'
 
 const CONFETTI = ['#e8b33c', '#5fa344', '#c24b3f', '#5a9bd8', '#e8b33c', '#5fa344', '#c24b3f', '#5a9bd8']
 
@@ -61,7 +61,7 @@ export function Celebration({
             Home
           </button>
           <button className="btn secondary" onClick={onAgain}>
-            ⟳ Play again
+            <RefreshSprite /> Play again
           </button>
         </div>
       </section>

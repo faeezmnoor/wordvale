@@ -92,3 +92,44 @@ directive); browser smoke: bank-select highlights only truly compatible slots (7
 
 **G-accept:** `bun run dev` → make a puzzle → Play. Try both paths: click a cell and type, or
 tap a bank word then a highlighted slot. Tab cycles words. Sound is on.
+
+## Slices e + f — themed packs, persistence, library, ambience (2026-08-12)
+
+**Shipped:** 8 packs × 3 curated lists (`src/data/packs/`, all build-time verified generatable),
+theme picker with hand-built pixel sprites · versioned IndexedDB store with debounced autosave,
+resume, delete-with-confirm, library cards with auto-drawn grid thumbnails and progress chips ·
+persisted wallet + sound settings · synthesized home ambience (birds + breeze), gesture-gated.
+
+**Deviations recorded:** ambience is synthesized rather than a bundled CC0 file (zero asset
+weight, same effect — `src/assets/audio/` is unused); the sidebar Check button is enabled in
+idle mode and emits the incomplete-check tick rather than being disabled.
+
+## Final /review gate (slices d–f): 3 blockers + 5 majors found, all fixed
+
+1. **Replaying a solved puzzle destroyed its record and re-minted coins** (blocker) — replay
+   reused the record id, and autosave overwrote it on mount with an empty board; re-solving
+   paid the coins again, so one puzzle could be farmed indefinitely. Fixed: replay mints a new
+   record, autosave is gated behind a dirty flag, celebration reports session-earned coins.
+   *Verified in browser: solved card stayed SOLVED, wallet unchanged after a replay-open.*
+2. **The on-screen keyboard overlay swallowed every tap** (blocker) — a full-viewport
+   `position: fixed` layer meant each grid/chip tap only dismissed the keyboard, doubling every
+   interaction on touch. Fixed with `pointer-events: none` on the overlay + bottom padding so
+   the focused word isn't hidden.
+3. **A synchronous IndexedDB failure hung Home forever** (blocker) — Firefox private mode throws
+   from `indexedDB.open`, rejecting the cached promise; the user sat on "Opening the valley…"
+   with no CTA. Fixed with try/catch → resolve(null), `onblocked`, and a `.catch` on load.
+4. **Autosave never flushed on unmount** (major) — the winning move could be lost while its
+   coins were already banked. Now flushed on cleanup + `pagehide`.
+5. **Replaying a fresh puzzle spawned duplicate library cards** (major) — id is now minted once
+   per session (lazy ref) and replay is an explicit new record.
+6. **Wrong-check flash could never re-trigger** (major) — the clear timer was cancelled by the
+   events effect; flashes now carry an id used as a React key.
+7. **Typing only the missing letters misplaced them** (major) — a letter that doesn't match a
+   locked cell now skips ahead instead of being swallowed, so both typing styles work.
+8. **Pack failures showed "we fit N of 0 words"** (major) — the failure panel and Try-again now
+   use the requested word list, not the textarea.
+
+Also fixed: transaction commit-on-complete for writes, ambience teardown (was scheduling
+oscillators forever), SFX drops oldest voice, colour-blind lock icons on solved words, remaining
+glyphs → sprites, keyboard keys fit at 360px, reduced-motion keeps a static wrong-answer signal,
+arrow keys prefer the matching direction, stale focus highlight cleared, equal-height cards.

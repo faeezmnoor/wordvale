@@ -7,7 +7,7 @@ import { newPuzzleId, savePuzzle } from '../../state/db'
 import { FittedGrid } from '../components/FittedGrid'
 import { TopBar } from '../components/TopBar'
 import { PixelKeyboard } from '../components/PixelKeyboard'
-import { CheckSprite } from '../components/Sprites'
+import { CheckSprite, LockSprite, SelectedDot } from '../components/Sprites'
 import { Celebration } from '../components/Celebration'
 import * as sfx from '../../audio/sfx'
 
@@ -23,9 +23,14 @@ export default function Play() {
     (d) => initPlay(d?.result.placements ?? [], d?.fill ?? {}, d?.solvedWords ?? []),
   )
   // stable id for this play session — resumed puzzles keep theirs, new ones get one now
-  const puzzleId = useRef(draft?.id ?? newPuzzleId(Date.now(), Math.random()))
+  const puzzleId = useRef<string | null>(null)
+  if (puzzleId.current === null) puzzleId.current = draft?.id ?? newPuzzleId(Date.now(), Math.random())
   const createdAt = useRef(Date.now())
-  const [flash, setFlash] = useState<{ kind: string; cells: string[] } | null>(null)
+  // don't write until the player actually changes something — protects a resumed record
+  const dirty = useRef(false)
+  const [flash, setFlash] = useState<{ kind: string; cells: string[]; id: number } | null>(null)
+  const flashId = useRef(0)
+  const sessionCoins = useRef(0)
   const [celebrating, setCelebrating] = useState(false)
 
   // event → SFX/animation pump
@@ -36,14 +41,15 @@ export default function Play() {
         sfx.arpeggio()
         sfx.ding()
         addCoins(COINS_PER_WORD)
-        setFlash({ kind: 'solve', cells: ev.cascade })
+        sessionCoins.current += COINS_PER_WORD
+        setFlash({ kind: 'solve', cells: ev.cascade, id: ++flashId.current })
       } else if (ev.type === 'wrongCheck') {
         sfx.thud()
         const p = state.placements.find((pl) => pl.word === ev.word)
-        if (p) setFlash({ kind: 'wrong', cells: cellsOf(p).map((c) => `${c.r},${c.c}`) })
+        if (p) setFlash({ kind: 'wrong', cells: cellsOf(p).map((c) => `${c.r},${c.c}`), id: ++flashId.current })
       } else if (ev.type === 'bankPlaced') {
         sfx.pluck(0.5)
-        setFlash({ kind: 'placed', cells: ev.changed })
+        setFlash({ kind: 'placed', cells: ev.changed, id: ++flashId.current })
       } else if (ev.type === 'shake') {
         sfx.thud()
       } else if (ev.type === 'incompleteCheck') {
@@ -54,39 +60,58 @@ export default function Play() {
       }
     }
     dispatch({ type: 'ack' })
+  }, [state.events, state.placements, addCoins])
+
+  // flash clears on its own timer (keyed on the flash itself, so it can't be cancelled
+  // by the events effect re-running)
+  useEffect(() => {
+    if (!flash) return
     const t = setTimeout(() => setFlash(null), 600)
     return () => clearTimeout(t)
-  }, [state.events, state.placements, addCoins])
+  }, [flash])
 
   useEffect(() => {
     if (!draft) go('home')
   }, [draft, go])
 
-  // debounced autosave (tech spec: 500ms during play + on visibilitychange)
+  // debounced autosave; also flushed on unmount and page hide so the winning move is never lost
+  const latest = useRef({ fill: state.fill, solved: state.solved })
+  latest.current = { fill: state.fill, solved: state.solved }
+
   useEffect(() => {
     if (!draft) return
-    const write = () =>
+    const write = () => {
+      if (!dirty.current) return
       void savePuzzle({
-        id: puzzleId.current,
+        id: puzzleId.current!,
         title: draft.title,
         words: draft.words,
         seed: draft.result.seed,
         placements: draft.result.placements,
-        fill: state.fill,
-        solvedWords: state.solved,
+        fill: latest.current.fill,
+        solvedWords: latest.current.solved,
         status: 'in-progress', // recomputed inside savePuzzle
-        coinsEarned: state.solved.length * COINS_PER_WORD,
+        coinsEarned: latest.current.solved.length * COINS_PER_WORD,
         createdAt: createdAt.current,
         updatedAt: Date.now(),
       })
+    }
     const t = setTimeout(write, 500)
-    const onHide = () => document.hidden && write()
+    const onHide = () => write()
     document.addEventListener('visibilitychange', onHide)
+    window.addEventListener('pagehide', onHide)
     return () => {
       clearTimeout(t)
       document.removeEventListener('visibilitychange', onHide)
+      window.removeEventListener('pagehide', onHide)
+      write() // flush on navigation away
     }
   }, [draft, state.fill, state.solved])
+
+  // any real change marks the record dirty (a bare open must not overwrite a saved puzzle)
+  useEffect(() => {
+    if (Object.keys(state.fill).length > 0 || state.solved.length > 0) dirty.current = true
+  }, [state.fill, state.solved])
 
   // physical keyboard
   useEffect(() => {
@@ -137,6 +162,14 @@ export default function Play() {
     return s
   }, [state.solved, state.placements])
 
+  // first tile of each solved word carries a lock — solved state is not colour-only
+  const lockCells = useMemo(() => {
+    const s = new Set<string>()
+    for (const p of state.placements)
+      if (state.solved.includes(p.word)) s.add(`${p.row},${p.col}`)
+    return s
+  }, [state.solved, state.placements])
+
   const compatCells = useMemo(() => {
     const s = new Set<string>()
     for (const i of compatibleSlots(state)) for (const c of cellsOf(state.placements[i])) s.add(`${c.r},${c.c}`)
@@ -153,7 +186,11 @@ export default function Play() {
       const flashing = flash?.cells.includes(key) ? flash.kind : null
       return {
         content: letter ? (
-          <span className={flashing === 'solve' || flashing === 'placed' ? 'cell-letter-enter' : undefined}>
+          <span
+            key={flash?.id ?? 0}
+            className={flashing === 'solve' || flashing === 'placed' ? 'cell-letter-enter' : undefined}
+          >
+            {lockCells.has(key) && <LockSprite />}
             {letter}
           </span>
         ) : focused ? (
@@ -164,6 +201,7 @@ export default function Play() {
           dispatch({ type: 'tapCell', key })
         },
         className: flashing === 'wrong' ? 'cell-wrong' : undefined,
+        flashKey: flashing === 'wrong' ? flash?.id : undefined,
         style: {
           background: solved ? 'var(--meadow)' : compat ? 'var(--sky-tint)' : inFocusWord ? 'var(--sky-tint)' : 'var(--parchment-hi)',
           borderColor: solved ? 'var(--meadow-dark)' : focused ? 'var(--gold)' : compat || inFocusWord ? 'var(--sky)' : 'var(--wood-dark)',
@@ -171,7 +209,7 @@ export default function Play() {
         },
       }
     },
-    [state, solvedCells, focusCells, compatCells, flash],
+    [state, solvedCells, lockCells, focusCells, compatCells, flash],
   )
 
   if (!draft) return null
@@ -180,11 +218,13 @@ export default function Play() {
   const solvedCount = state.solved.length
   const showKeyboard = isCoarse() && state.mode === 'wordFocus' && !celebrating
   const score = state.solved.join('').length * SCORE_PER_LETTER + (celebrating ? SCORE_COMPLETE_BONUS : 0)
+  // show what this session actually paid — resuming a half-done puzzle must not claim the lot
+  const earnedCoins = sessionCoins.current
 
   return (
     <div className="page">
       <TopBar title={draft.title} back />
-      <div className="playwrap">
+      <div className={`playwrap${showKeyboard ? ' kb-open' : ''}`}>
         <section className="panel gridpanel" onClick={(e) => e.target === e.currentTarget && dispatch({ type: 'dismiss' })}>
           <FittedGrid rows={bounds.rows} cols={bounds.cols} slots={slots} cell={cell} />
         </section>
@@ -215,7 +255,7 @@ export default function Play() {
                   }}
                 >
                   {p.word}
-                  {selected ? ' •' : ''}
+                  {selected && <SelectedDot />}
                 </button>
               )
             })}
@@ -244,7 +284,7 @@ export default function Play() {
       {celebrating && (
         <Celebration
           score={score}
-          coins={total * COINS_PER_WORD}
+          coins={earnedCoins}
           onHome={() => go('home')}
           onAgain={() => go('review')}
         />

@@ -144,16 +144,25 @@ export function playReducer(s: PlayState, a: PlayAction): PlayState {
       if (s.mode !== 'wordFocus' || s.focusWord === null || !s.focusCell) return s
       const letter = a.letter.toUpperCase()
       if (!/^[A-Z]$/.test(letter)) return s
-      const from = s.focusCell
-      let next = s
-      // a locked cell can't be overwritten, but typing still walks past it
-      if (!isLocked(s, from)) {
-        next = { ...s, fill: { ...s.fill, [from]: letter } }
-        next = autoCheck(next, [from])
+      // Locked cells are position-agnostic: typing the whole word walks over them, and
+      // typing only the MISSING letters also works — a letter that doesn't match the locked
+      // cell isn't consumed there, it skips ahead to the next writable cell.
+      let target: string | null = s.focusCell
+      while (target && isLocked(s, target)) {
+        const lockedLetter = s.fill[target]
+        if (lockedLetter === letter) {
+          // the player typed the letter that's already there: consume it, move on
+          const after = nextCell(s, s.focusWord, target)
+          return { ...s, focusCell: after ?? target }
+        }
+        target = nextCell(s, s.focusWord, target)
       }
+      if (!target) return s
+      let next: PlayState = { ...s, fill: { ...s.fill, [target]: letter } }
+      next = autoCheck(next, [target])
       if (next.mode === 'wordFocus' && next.focusWord !== null) {
-        const adv = nextCell(next, next.focusWord, from)
-        if (adv) next = { ...next, focusCell: adv }
+        const adv = nextCell(next, next.focusWord, target)
+        next = { ...next, focusCell: adv ?? target }
       }
       return next
     }
@@ -185,8 +194,10 @@ export function playReducer(s: PlayState, a: PlayAction): PlayState {
         const k = keyOf(r + a.dr * step, c + a.dc * step)
         const words = wordsAt(s, k)
         if (words.length) {
-          const sameDir = words.find((i) => s.focusWord !== null && i === s.focusWord)
-          const focusWord = sameDir ?? words[0]
+          const wantDir = a.dr !== 0 ? 'down' : 'across'
+          const byDir = words.find((i) => s.placements[i].dir === wantDir)
+          const keepCurrent = words.find((i) => i === s.focusWord)
+          const focusWord = byDir ?? keepCurrent ?? words[0]
           return { ...s, mode: 'wordFocus', focusWord, focusCell: k, bankWord: null }
         }
       }
@@ -213,7 +224,9 @@ export function playReducer(s: PlayState, a: PlayAction): PlayState {
     }
 
     case 'check': {
-      if (s.mode !== 'wordFocus' || s.focusWord === null) return s
+      if (s.mode !== 'wordFocus' || s.focusWord === null) {
+        return { ...s, events: [...s.events, { type: 'incompleteCheck' }] }
+      }
       const w = s.placements[s.focusWord].word
       if (s.solved.includes(w)) return s
       if (!wordFilled(s, s.focusWord)) return { ...s, events: [...s.events, { type: 'incompleteCheck' }] }
@@ -271,5 +284,7 @@ function placeBankWord(s: PlayState, tappedKey: string): PlayState {
   }
   next = autoCheck(next, cells)
   const stillFits = compatibleSlots(next).length > 0 && !next.solved.includes(word)
-  return { ...next, mode: stillFits ? 'bankSelect' : 'idle', bankWord: stillFits ? word : null }
+  if (stillFits) return { ...next, mode: 'bankSelect', bankWord: word }
+  // no stale highlight left behind when the selection ends
+  return { ...next, mode: 'idle', bankWord: null, focusWord: null, focusCell: null }
 }

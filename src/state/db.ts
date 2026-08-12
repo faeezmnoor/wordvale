@@ -27,16 +27,21 @@ function open(): Promise<IDBDatabase | null> {
   if (dbPromise) return dbPromise
   dbPromise = new Promise((resolve) => {
     if (typeof indexedDB === 'undefined') return resolve(null)
-    const req = indexedDB.open(DB_NAME, DB_VERSION)
-    req.onupgradeneeded = () => {
-      const db = req.result
-      if (!db.objectStoreNames.contains(STORE)) {
-        const store = db.createObjectStore(STORE, { keyPath: 'id' })
-        store.createIndex('updatedAt', 'updatedAt')
+    try {
+      // Firefox private mode throws synchronously here — must not reject the cached promise
+      const req = indexedDB.open(DB_NAME, DB_VERSION)
+      req.onupgradeneeded = () => {
+        const db = req.result
+        if (!db.objectStoreNames.contains(STORE)) {
+          db.createObjectStore(STORE, { keyPath: 'id' })
+        }
       }
+      req.onsuccess = () => resolve(req.result)
+      req.onerror = () => resolve(null)
+      req.onblocked = () => resolve(null)
+    } catch {
+      resolve(null)
     }
-    req.onsuccess = () => resolve(req.result)
-    req.onerror = () => resolve(null)
   })
   return dbPromise
 }
@@ -45,10 +50,22 @@ async function tx<T>(mode: IDBTransactionMode, run: (store: IDBObjectStore) => I
   const db = await open()
   if (!db) return null
   return new Promise((resolve) => {
-    const transaction = db.transaction(STORE, mode)
-    const req = run(transaction.objectStore(STORE))
-    req.onsuccess = () => resolve(req.result)
-    req.onerror = () => resolve(null)
+    try {
+      const transaction = db.transaction(STORE, mode)
+      const req = run(transaction.objectStore(STORE))
+      let result: T | null = null
+      req.onsuccess = () => {
+        result = req.result
+        // reads can resolve immediately; writes must wait for the commit
+        if (mode === 'readonly') resolve(result)
+      }
+      req.onerror = () => resolve(null)
+      transaction.oncomplete = () => resolve(result)
+      transaction.onabort = () => resolve(null)
+      transaction.onerror = () => resolve(null)
+    } catch {
+      resolve(null)
+    }
   })
 }
 

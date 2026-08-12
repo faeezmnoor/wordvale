@@ -240,6 +240,7 @@ h3 {
 
 /* ---- play screen (slice d) ---- */
 .playwrap { display: flex; gap: 16px; flex-wrap: wrap; align-items: stretch; flex: 1; }
+.playwrap.kb-open { padding-bottom: 40vh; }
 .gridpanel {
   padding: 16px;
   flex: 1 1 480px;
@@ -271,7 +272,15 @@ html, body { max-width: 100%; overflow-x: hidden; }
 }
 .cell-wrong { animation: wrong-flash 0.5s steps(2, end) 1; }
 
-.kb-overlay { position: fixed; inset: 0; z-index: 20; display: flex; align-items: flex-end; }
+.kb-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: flex;
+  align-items: flex-end;
+  pointer-events: none; /* the grid and chips stay tappable while the keyboard is up */
+}
+.kb-overlay .kb { pointer-events: auto; }
 .kb {
   width: 100%;
   display: flex;
@@ -283,9 +292,11 @@ html, body { max-width: 100%; overflow-x: hidden; }
   padding: 10px 6px calc(10px + env(safe-area-inset-bottom));
   max-height: 38vh;
 }
-.kbrow { display: flex; gap: 6px; }
+.kbrow { display: flex; gap: 4px; width: 100%; justify-content: center; }
 .key {
-  min-width: 32px;
+  flex: 1 1 0;
+  min-width: 0;
+  max-width: 44px;
   height: 44px;
   display: flex;
   align-items: center;
@@ -327,6 +338,8 @@ html, body { max-width: 100%; overflow-x: hidden; }
 
 @media (prefers-reduced-motion: reduce) {
   .caret, .cell-wrong, .confetti { animation: none; }
+  /* still show the wrong-answer signal — just statically (design spec) */
+  .cell-wrong { background: var(--berry) !important; border-color: var(--berry-dark) !important; color: var(--parchment-hi) !important; }
 }
 
 .themes { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; }
@@ -346,7 +359,7 @@ html, body { max-width: 100%; overflow-x: hidden; }
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 16px;
-  align-items: start;
+  align-items: stretch; /* design spec: cards stretch to equal heights */
 }
 @media (min-width: 700px) {
   .cards { grid-template-columns: repeat(auto-fill, 260px); justify-content: start; }
@@ -354,7 +367,17 @@ html, body { max-width: 100%; overflow-x: hidden; }
 .card { padding: 14px; display: flex; flex-direction: column; gap: 8px; }
 .card h3 { font-size: 1.05rem; }
 .cardmeta { color: var(--ink-soft); font-size: 0.82rem; display: flex; justify-content: space-between; align-items: center; gap: 8px; }
-.thumbbtn { background: none; border: none; padding: 0; cursor: pointer; display: flex; justify-content: center; }
+.thumbbtn {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 120px; /* fixed so cards in a row line up regardless of grid shape */
+}
+.card h3 { margin-top: auto; }
 .thumb { display: grid; gap: 2px; justify-content: center; padding: 10px 0; }
 .thumb i { display: block; width: 100%; height: 100%; border: 1px solid var(--wood-dark); background: var(--parchment-hi); }
 .thumb i.on { background: var(--meadow); border-color: var(--meadow-dark); }

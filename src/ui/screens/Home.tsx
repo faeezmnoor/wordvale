@@ -13,19 +13,23 @@ export default function Home() {
   const [confirmDelete, setConfirmDelete] = useState<string | null>(null)
 
   useEffect(() => {
-    void listPuzzles().then(setPuzzles)
+    void listPuzzles()
+      .then(setPuzzles)
+      .catch(() => setPuzzles([])) // storage-less browser still gets the first-run hero
     enableAmbience()
     return () => disableAmbience()
   }, [])
 
   const resume = (p: PuzzleRecord) => {
     sfx.click()
+    const replaying = p.status === 'solved'
     setDraft({
       words: p.words,
       title: p.title,
-      id: p.id,
-      fill: p.status === 'solved' ? {} : p.fill,
-      solvedWords: p.status === 'solved' ? [] : p.solvedWords,
+      // replay is a NEW record: keeping the id would wipe the solved one and re-mint coins
+      id: replaying ? undefined : p.id,
+      fill: replaying ? {} : p.fill,
+      solvedWords: replaying ? [] : p.solvedWords,
       result: {
         status: 'complete',
         placements: p.placements,

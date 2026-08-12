@@ -32,7 +32,7 @@ function build(c: AudioContext) {
   // birds: occasional short chirps, scheduled ahead in a loop
   let timer: ReturnType<typeof setInterval> | null = null
   const chirp = () => {
-    if (c.state !== 'running') return
+    if (c.state !== 'running' || !wanted) return
     const t = c.currentTime + Math.random() * 2
     const osc = c.createOscillator()
     const g = c.createGain()
@@ -106,6 +106,10 @@ export function enableAmbience() {
 export function disableAmbience() {
   wanted = false
   applyVolume()
+  // fully tear down after the fade so nothing keeps scheduling in the background
+  const dying = nodes
+  nodes = null
+  setTimeout(() => dying?.stop(), 700)
 }
 
 export function refreshAmbienceVolume() {

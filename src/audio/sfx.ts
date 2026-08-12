@@ -29,6 +29,17 @@ function ensureCtx(): AudioContext | null {
   }
 }
 
+const voices: { stop: () => void }[] = []
+
+function stopOldest() {
+  const v = voices.shift()
+  try {
+    v?.stop()
+  } catch {
+    /* already ended */
+  }
+}
+
 function tone(
   freq: number,
   opts: { type?: OscillatorType; dur?: number; vol?: number; delay?: number; slide?: number } = {},
@@ -36,7 +47,8 @@ function tone(
   const settings = getSettings()
   if (!settings.sound) return
   const c = ensureCtx()
-  if (!c || active >= MAX_CONCURRENT) return
+  if (!c) return
+  if (active >= MAX_CONCURRENT) stopOldest()
   const { type = 'triangle', dur = 0.12, vol = 0.5, delay = 0, slide = 0 } = opts
   const t0 = c.currentTime + delay
   const osc = c.createOscillator()
@@ -48,8 +60,12 @@ function tone(
   gain.gain.exponentialRampToValueAtTime(0.001, t0 + dur)
   osc.connect(gain).connect(c.destination)
   active++
+  const voice = { stop: () => osc.stop() }
+  voices.push(voice)
   osc.onended = () => {
     active = Math.max(0, active - 1)
+    const i = voices.indexOf(voice)
+    if (i >= 0) voices.splice(i, 1)
   }
   osc.start(t0)
   osc.stop(t0 + dur + 0.02)

@@ -9,6 +9,8 @@ export interface CellView {
   className?: string
   style?: React.CSSProperties
   onClick?: () => void
+  /** bump to restart a one-shot animation on an otherwise unchanged cell */
+  flashKey?: number
 }
 
 /**
@@ -72,7 +74,7 @@ export function FittedGrid({
           const view = cell(key, tile)
           return (
             <div
-              key={key}
+              key={view.flashKey ? `${key}-${view.flashKey}` : key}
               className={view.className}
               onClick={view.onClick}
               style={{
@@ -84,6 +86,7 @@ export function FittedGrid({
                 background: 'var(--parchment-hi)',
                 border: '3px solid var(--wood-dark)',
                 cursor: view.onClick ? 'pointer' : undefined,
+                position: 'relative',
                 ...view.style,
               }}
             >

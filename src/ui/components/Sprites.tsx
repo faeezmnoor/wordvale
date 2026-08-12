@@ -238,3 +238,33 @@ export function SoundSprite({ on, size = 18 }: { on: boolean; size?: number }) {
       ]
   return <Px size={size} rects={[...speaker, ...waves]} />
 }
+
+/** solved-word marker — redundancy so "solved" is never colour-only */
+export function LockSprite({ size = 10 }: { size?: number }) {
+  return (
+    <span style={{ position: 'absolute', top: 2, left: 2, lineHeight: 0 }}>
+      <Px
+        size={size}
+        rects={[
+          [2, 0, 4, 1, '#faf1dc'],
+          [1, 1, 1, 2, '#faf1dc'],
+          [6, 1, 1, 2, '#faf1dc'],
+          [1, 3, 6, 4, '#faf1dc'],
+          [3, 4, 2, 2, '#3f7a2e'],
+        ]}
+      />
+    </span>
+  )
+}
+
+/** selected word-bank chip marker (no glyphs in product UI) */
+export function SelectedDot({ size = 8 }: { size?: number }) {
+  return (
+    <Px
+      size={size}
+      rects={[
+        [2, 2, 4, 4, '#5a9bd8'],
+      ]}
+    />
+  )
+}

@@ -57,6 +57,13 @@ export default function Create() {
     request(pre.valid, seed + attempt.current) // new seed every attempt (Try again must differ)
   }
 
+  /** retry whatever was last requested — works for both the textarea and a theme pack */
+  const retry = () => {
+    setFailure(null)
+    attempt.current += 1
+    request(requested.current, seed + attempt.current)
+  }
+
   const acceptPartial = () => {
     if (!failure) return
     // ground truth = what the engine actually placed (race-immune)
@@ -192,7 +199,7 @@ export default function Create() {
               {failure.status === 'partial' ? (
                 <>
                   <h2 style={{ fontSize: '1.2rem' }}>
-                    We fit {failure.placements.length} of {pre.valid.length} words
+                    We fit {failure.placements.length} of {requested.current.length} words
                   </h2>
                   <p style={{ color: 'var(--ink-soft)', margin: '6px 0 10px' }}>
                     These don't share enough letters with the rest:
@@ -208,10 +215,16 @@ export default function Create() {
                     <button className="btn" onClick={acceptPartial}>
                       Drop &amp; play
                     </button>
-                    <button className="btn secondary" onClick={generate}>
+                    <button className="btn secondary" onClick={retry}>
                       Try again
                     </button>
-                    <button className="btn ghost" onClick={() => setFailure(null)}>
+                    <button
+                      className="btn ghost"
+                      onClick={() => {
+                        setFailure(null)
+                        setTab('words')
+                      }}
+                    >
                       Edit words
                     </button>
                   </div>
@@ -222,7 +235,7 @@ export default function Create() {
                   <p style={{ color: 'var(--ink-soft)', margin: '6px 0 10px' }}>
                     Add a few longer words that share letters, then try again.
                   </p>
-                  <button className="btn secondary" onClick={generate}>
+                  <button className="btn secondary" onClick={retry}>
                     Try again
                   </button>
                 </>
