@@ -30,10 +30,16 @@ The riskiest code, built first, headless.
 - **Difficulty-proofing (owner comment #2):** engine output is pure placement data
   (word, row, col, dir) — no assumptions that the word bank is visible. Presentation decides
   what the player sees.
-- **Debug harness:** a dev-only route rendering any (words, seed) → grid + metrics, for tuning.
+- **Debug harness:** a dev-only route rendering any (words, seed) → grid + metrics, for tuning;
+  must regenerate in <10s round-trip so quality-tuning iterations stay cheap.
 - **Tests:** property-based — for 500 random valid word lists: all placements legal, deterministic
-  under fixed seed, no adjacency violations; plus fixture tests for every failure class.
-- **Accept:** harness generates legal grids for all bundled packs; 500-case property suite green.
+  under fixed seed, no adjacency violations; **seed diversity: first 100 seeds of one list yield
+  100 distinct grids** *(council)*; plus fixture tests for every failure class.
+- **Stage-3 spec must define** *(council)*: the weighted scoring function (explicit weights, not
+  lexicographic hand-waving) and the backtracking early-exit heuristic (attempts before partial).
+- **Accept:** harness generates legal grids for all bundled packs; property suite green;
+  **dev self-play: solve 5 generated grids end-to-end in the harness, each rated ≥3/5 for
+  interest** *(council — tests the plan's own #1 risk; self-administered, not an owner gate)*.
 
 ### b. Text input → generate, with failure UX
 - Paste/type words (one per line or comma-separated); live validation chips (too short, non-Latin,
@@ -67,8 +73,11 @@ The riskiest code, built first, headless.
 - **Fun bar (owner comment #4):** puzzle-complete celebration (pixel confetti + banner), tile-pop
   on every solve, idle sprite in the header, decorative flora corners on panels. Sound effects
   stubbed behind a mute-default toggle (assets land here only if slice time allows, else Iter 4).
+- **Pre-authorized split clause** *(council)*: if this slice exceeds one working sitting, it
+  splits mid-build into d1 (input logic) / d2 (responsive render) / d3 (effects) with no replan
+  ceremony — each sub-slice gets its own `/review` + G-accept note.
 - **Accept:** a full puzzle is playable start-to-finish with keyboard only, and separately with
-  touch only; layout audited at 360px / 768px / 1280px widths.
+  touch only; layout audited at **360px** / 768px / 1280px widths (small-phone check explicit).
 
 ### e. "Generate for me" — bundled themed packs
 - ≥ 8 packs × ≥ 3 lists each (JSON in `src/data/`): Animals, Food & Cooking, Travel, Malaysia,
@@ -77,8 +86,12 @@ The riskiest code, built first, headless.
 - **Accept:** every bundled list generates successfully in CI (property test over packs).
 
 ### f. Persistence + home/library
-- IndexedDB (schema v1, versioned): puzzles (words, seed, placements, fill state, status),
-  wallet stub. localStorage: settings.
+- IndexedDB (schema v1, versioned): puzzles (words, seed, placements, fill state, status).
+  localStorage: settings. **No wallet stub** *(council — economy is out of scope; dead code
+  invites drift; Iteration 2 adds its own store under schema versioning)*.
+- **The fill-state schema is written in the Stage-3 tech spec** (before slice d builds) and
+  slice f implements against it — fixes the d-writes-what-f-defines inversion without
+  reordering slices *(council)*.
 - Home: library grid of saved puzzles (resume/replay/delete) or first-run CTA → create flow.
   Mid-puzzle refresh resumes exactly.
 - **Accept:** create → play half → refresh → resume; delete works; first-run CTA state renders.
@@ -91,13 +104,28 @@ e can interleave after b if d drags.
 Economy/coins beyond the visual stub (Iter 2), OCR (Iter 3), voice (Iter 4), difficulty
 mechanics (backlog — engine merely stays neutral to them), dark mode, sharing, clue layers.
 
-## Open questions for Faeez (at this gate)
-1. **Wrong-letter feedback:** v1 keeps checking explicit (Enter/`Check` button) rather than
+## Open questions for Faeez (riding this gate — no new gates added)
+1. **Grid-labeling model** *(design-blocking)*: when the puzzle starts, are slots pure inference
+   (only lengths + intersections guide you — classic kriss-kross, harder) or lightly guided
+   (e.g. the longest word pre-filled as an anchor, common in print kriss-kross)?
+2. **What does "core loop works" mean to you** — grids merely legal, satisfying to solve, or
+   "I'd come back tomorrow"? This sets the acceptance bar for the generator.
+3. **Mobile input:** custom on-screen pixel keyboard (Wordle-style — reliable everywhere, more
+   build, on-theme) or the phone's native keyboard (less work, ~30–40% base rate of fiddliness
+   on iOS Safari)?
+4. **Wrong-letter feedback:** v1 keeps checking explicit (Enter/`Check`) rather than
    auto-marking errors red — matches "cozy, not punishing". OK, or prefer instant feedback?
-2. **Packs list:** happy with the 8 themes above? Anything you want added/removed (e.g. Kids,
-   Islamic terms, Bahasa Melayu pack)?
-3. Difficulty brainstorm is parked in backlog.md with 7 candidate mechanics — skim when
-   convenient; nothing in this iteration blocks any of them.
+5. **Packs list:** happy with the 8 themes? Add/remove (e.g. Kids, Bahasa Melayu)?
+
+Difficulty brainstorm stays parked in backlog.md (7 candidate mechanics); nothing here blocks them.
+
+## Explicitly deferred (council-decided defaults)
+- **Date→seed daily-puzzle contract:** deferred — the engine's pure `(words, seed) → grid`
+  contract already makes a daily mode a one-line wrapper later.
+- **Accessibility (color-blind palettes, screen reader on grid):** real debt, consciously
+  carried; logged for Iteration-2 planning.
+- **Per-word micro-celebrations & pack difficulty tags:** cheap wins noted for Stage-2 design
+  to include if they fit the slice; not acceptance-gating.
 
 ## Risks
 - **Grid quality is subjective** — mitigation: quality metrics + debug harness make tuning
@@ -107,6 +135,28 @@ mechanics (backlog — engine merely stays neutral to them), dark mode, sharing,
 - **Slice d is the biggest** — mitigation: keyboard model specced precisely in Stage 3 before
   build; chips path ships first within the slice.
 
-## Council findings
+## Council findings (2026-08-12, full `/council-review`: 5 advisors + 5 anonymous peer reviews + devil's advocate + chairman)
 
-*(appended after the full `/council-review` gate)*
+**Verdict: PASS — proceed to Stage 2 now. Six slices stay six. Zero new gates.** The devil's
+advocate won the process argument (this owner's projects' observed failure mode is stalls behind
+blocking gates, not rework from under-planning — Iteration 0 shipped in a day), so the advisors'
+proposed restructuring (8–9 slices, pre-design decision queue, new human-play gate) was rejected
+as delivered. Their substance survived as zero-momentum-cost amendments:
+
+| Finding | Source | Resolution |
+|---|---|---|
+| Legal ≠ playable: property tests don't test the plan's own #1 risk (grid quality) | Contrarian + First Principles + 3 peer reviews | Slice-a acceptance: dev self-plays 5 grids ≥3/5; harness <10s round-trip |
+| Seed diversity untested | Peer review | Property test: 100 seeds → 100 distinct grids |
+| Scoring function unweighted; no early-exit heuristic | First Principles | Mandatory Stage-3 spec items |
+| Slice d is 2–3 slices in disguise | Executor + Contrarian + First Principles | Pre-authorized mid-build split clause (d1/d2/d3), no replan ceremony |
+| f defines the schema d writes (order inversion) | Executor | Schema written in Stage-3 spec before d builds; slice order unchanged |
+| Grid-labeling model undefined — changes what design draws | Outsider (peer-voted strongest ambiguity) | Owner question #1 on this gate |
+| "Core loop works" never defined by owner | Peer review | Owner question #2 |
+| iOS hidden-input soft keyboard ~30–40% smooth base rate | Executor + First Principles | Owner question #3 (custom keyboard option); chips path remains fallback |
+| Wallet stub = dead code inviting drift | Outsider | Dropped from slice f |
+| Date→seed daily contract "lock now" | Expansionist | **Rejected** (chairman): pure-seed contract already makes it free later |
+| Interaction semantics (crossing-cell focus, Check scope, conflicts, Tab rules, autocorrect, status enum, failure-loop mechanics) | Outsider + First Principles + Contrarian | Routed to Stage-3 tech spec (already scheduled; blocks nothing now) |
+| Accessibility absent | Peer review | Deferred to Iteration-2 planning, logged as conscious debt |
+
+**Gate-count audit (chairman check):** owner-blocking gates in this plan = exactly **1** (this
+Stage-1 approval). ✓
