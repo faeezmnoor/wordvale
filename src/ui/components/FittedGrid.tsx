@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react'
 
-const MIN_TILE = 24
+const MIN_TILE = 20 // Silkscreen stays legible at tile*0.5 = 10px+ only down to here
 const MAX_TILE = 128 // small grids must still fill the panel (owner space directive)
 const GAP = 3
 
@@ -47,7 +47,16 @@ export function FittedGrid({
   return (
     <div
       ref={wrapRef}
-      style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+      // a very wide grid on a narrow phone scrolls INSIDE this box — the page never scrolls
+      style={{
+        width: '100%',
+        height: '100%',
+        minWidth: 0,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        overflow: 'auto',
+      }}
     >
       <div
         style={{

@@ -98,13 +98,16 @@ function autoCheck(s: PlayState, touchedCells: string[]): PlayState {
   return next
 }
 
-function nextEmptyCell(s: PlayState, wordIdx: number, fromKey: string | null): string | null {
+/** the next cell along the word (not the next EMPTY one) — typing walks every cell so a
+ *  player can type a whole word straight through even where crossings are already filled */
+function nextCell(s: PlayState, wordIdx: number, fromKey: string): string | null {
   const cells = wordCells(s.placements[wordIdx])
-  const start = fromKey ? cells.indexOf(fromKey) + 1 : 0
-  for (let i = start; i < cells.length; i++) {
-    if (!s.fill[cells[i]] && !isLocked(s, cells[i])) return cells[i]
-  }
-  return null
+  const i = cells.indexOf(fromKey)
+  return i >= 0 && i + 1 < cells.length ? cells[i + 1] : null
+}
+
+function firstCell(s: PlayState, wordIdx: number): string {
+  return wordCells(s.placements[wordIdx])[0]
 }
 
 export function playReducer(s: PlayState, a: PlayAction): PlayState {
@@ -141,14 +144,15 @@ export function playReducer(s: PlayState, a: PlayAction): PlayState {
       if (s.mode !== 'wordFocus' || s.focusWord === null || !s.focusCell) return s
       const letter = a.letter.toUpperCase()
       if (!/^[A-Z]$/.test(letter)) return s
+      const from = s.focusCell
       let next = s
-      if (!isLocked(s, s.focusCell)) {
-        next = { ...s, fill: { ...s.fill, [s.focusCell]: letter } }
-        next = autoCheck(next, [s.focusCell])
+      // a locked cell can't be overwritten, but typing still walks past it
+      if (!isLocked(s, from)) {
+        next = { ...s, fill: { ...s.fill, [from]: letter } }
+        next = autoCheck(next, [from])
       }
-      // advance within the word to the next empty unlocked cell (stay at end)
       if (next.mode === 'wordFocus' && next.focusWord !== null) {
-        const adv = nextEmptyCell(next, next.focusWord, next.focusCell)
+        const adv = nextCell(next, next.focusWord, from)
         if (adv) next = { ...next, focusCell: adv }
       }
       return next
@@ -199,12 +203,11 @@ export function playReducer(s: PlayState, a: PlayAction): PlayState {
         ? (cur - 1 + unsolved.length) % unsolved.length
         : (cur + 1) % unsolved.length
       const target = unsolved[cur === -1 ? 0 : nextIdx]
-      const firstEmpty = nextEmptyCell({ ...s, focusWord: target.i }, target.i, null)
       return {
         ...s,
         mode: 'wordFocus',
         focusWord: target.i,
-        focusCell: firstEmpty ?? wordCells(target.p)[0],
+        focusCell: firstCell(s, target.i), // start of the word: type it straight through
         bankWord: null,
       }
     }

@@ -26,6 +26,22 @@ describe('playMachine', () => {
     expect(s.placements[s.focusWord!].word).toBe('CAT')
   })
 
+  test('typing a whole word walks past locked crossing letters', () => {
+    // solve CAT first → 0,1 (the A) locks; typing "arc" from ARC's first cell must still work
+    let s = run(
+      initPlay(P),
+      { type: 'tapCell', key: '0,0' },
+      { type: 'typeLetter', letter: 'c' },
+      { type: 'typeLetter', letter: 'a' },
+      { type: 'typeLetter', letter: 't' },
+      { type: 'ack' },
+      { type: 'tab' }, // focuses ARC at its first cell (0,1 — locked A)
+    )
+    s = run(s, { type: 'typeLetter', letter: 'a' }, { type: 'typeLetter', letter: 'r' }, { type: 'typeLetter', letter: 'c' })
+    expect(s.solved).toContain('ARC')
+    expect(s.fill['0,1']).toBe('A') // locked cell untouched
+  })
+
   test('typing writes, advances, auto-solves; crossing letter feeds both words', () => {
     let s = run(
       initPlay(P),
@@ -66,9 +82,10 @@ describe('playMachine', () => {
       { type: 'typeLetter', letter: 't' },
       { type: 'ack' },
     )
-    // focus ARC via tab; its first empty cell is 1,1 (0,1 locked+filled)
+    // focus ARC via tab; focus lands on the word's FIRST cell even though it's locked,
+    // so the player can type the whole word straight through
     s = run(s, { type: 'tab' })
-    expect(s.focusCell).toBe('1,1')
+    expect(s.focusCell).toBe('0,1')
     const before = s.fill['0,1']
     s = run(s, { type: 'tapCell', key: '0,1' }, { type: 'tapCell', key: '0,1' }, { type: 'typeLetter', letter: 'z' })
     expect(s.fill['0,1']).toBe(before) // locked: unchanged

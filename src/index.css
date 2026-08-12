@@ -113,6 +113,17 @@ h3 {
   transform: translate(2px, 2px);
   box-shadow: 1px 1px 0 rgba(91, 58, 36, 0.35);
 }
+.btn:disabled {
+  background: var(--parchment);
+  color: var(--ink-soft);
+  border-color: var(--wood-dark);
+  cursor: default;
+  box-shadow: 2px 2px 0 rgba(91, 58, 36, 0.2);
+}
+/* visual hierarchy: primary = meadow, secondary = wood, ghost = outline only */
+.btn.secondary { background: var(--wood); border-color: var(--wood-dark); }
+.btn.ghost { background: transparent; color: var(--ink); border-color: var(--wood-dark); }
+.btn.ghost:disabled { background: transparent; }
 
 /* Tile-fill pop: stepped, pixel-authentic (DESIGN.md → Motion) */
 @keyframes tile-pop {
@@ -240,9 +251,12 @@ h3 {
 .sidepanel { padding: 16px; flex: 0 1 280px; min-width: 240px; display: flex; flex-direction: column; gap: 14px; }
 @media (max-width: 899px) {
   .playwrap { flex-direction: column; }
-  .gridpanel { min-height: 300px; flex: 1 1 auto; }
+  .gridpanel { min-height: 55vh; flex: 1 1 auto; }
   .sidepanel { flex: 0 0 auto; }
+  .playwrap > * { min-width: 0; max-width: 100%; }
 }
+.gridpanel, .sidepanel { min-width: 0; max-width: 100%; }
+html, body { max-width: 100%; overflow-x: hidden; }
 
 .chipbtn { cursor: pointer; }
 .chipbtn:disabled { cursor: default; }
