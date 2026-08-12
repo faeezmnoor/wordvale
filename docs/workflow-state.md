@@ -5,9 +5,10 @@
 - **Current iteration:** 01-core-loop (full cycle)
 - **Current stage:** Stage 2 complete pending owner gate
 - **Open AI gates:** none — design-review PASS-WITH-FIXES (all fixes applied) + quick council PASS on 02-design.md
-- **Open owner gates:** none blocking — Stage-1 **approved 2026-08-12** with two directives
-  (space optimization hard requirement; NO drag-and-drop — selection + typing only) and 5
-  defaults adopted (see plan §Owner gate outcome; overridable before slice d builds)
+- **Open owner gates:** **Stage-2 design approval** — Faeez reviews mockup screenshots (or opens
+  `docs/iterations/01-core-loop/mockups/*.html` in a browser for the live motion). Approve =
+  aesthetic + layouts locked; Stage 3 tech spec starts. Also riding this gate: proposed
+  contract amendment (full council for Stage-1 plans; quick council for Stage-2/3 docs).
 - **Owner feedback routed:** see [iterations/01-core-loop/00-owner-feedback.md](iterations/01-core-loop/00-owner-feedback.md)
 
 ## Gate log
