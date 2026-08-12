@@ -17,3 +17,11 @@ Approved with two directives, both applied same-day:
 |---|---|---|
 | 5 | **Space optimization**: crossword was too small vs its panel; grids must fill available space | Iteration-0 preview fixed (bounding-box render + ResizeObserver fit, tiles 24-72px integer); slice-d acceptance: grid fills >=70% of panel limiting dimension |
 | 6 | **No drag-and-drop** — not intuitive for web crosswords; use text input + selection (select word / select slot) | Slice-d input model rewritten: select-and-type + select-and-place only; custom on-screen pixel keyboard on touch |
+
+## Round 3 — at Stage-2 design approval (2026-08-12)
+
+Approved, with one addition:
+
+| # | Directive | Applied where |
+|---|---|---|
+| 7 | **Sound design** — interaction sounds + home-page ambience suitable for the Stardew-like experience | Design spec gains a full Sound section (SFX inventory, ambience, autoplay-policy handling, defaults); sound moves from "stubbed, maybe Iteration 4" into Iteration-1 scope (slices d + f); audio architecture specced in Stage 3 |

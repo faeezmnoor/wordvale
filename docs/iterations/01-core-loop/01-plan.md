@@ -79,9 +79,10 @@ The riskiest code, built first, headless.
   acceptance: grid occupies ≥70% of the puzzle panel's limiting dimension on desktop and mobile.
   ≥ 900px: grid + side panel; < 900px: grid on top, word bank as wrapping chips below; no
   horizontal page scroll at any width.
-- **Fun bar (owner comment #4):** puzzle-complete celebration (pixel confetti + banner), tile-pop
-  on every solve, idle sprite in the header, decorative flora corners on panels. Sound effects
-  stubbed behind a mute-default toggle (assets land here only if slice time allows, else Iter 4).
+- **Fun bar (owner comment #4 + sound directive at Stage-2 gate):** puzzle-complete celebration
+  (pixel confetti + banner), tile-pop on every solve, idle sprite in the header, decorative flora
+  corners on panels. **Core SFX set ships in this slice** (Web-Audio-synthesized: pluck, arpeggio,
+  thud, ding, fanfare, click — per 02-design.md §Sound design); default ON, top-bar toggle.
 - **Pre-authorized split clause** *(council)*: if this slice exceeds one working sitting, it
   splits mid-build into d1 (input logic) / d2 (responsive render) / d3 (effects) with no replan
   ceremony — each sub-slice gets its own `/review` + G-accept note.
@@ -94,7 +95,7 @@ The riskiest code, built first, headless.
 - Theme picker screen feeds the same pipeline as typed input.
 - **Accept:** every bundled list generates successfully in CI (property test over packs).
 
-### f. Persistence + home/library
+### f. Persistence + home/library + ambience
 - IndexedDB (schema v1, versioned): puzzles (words, seed, placements, fill state, status).
   localStorage: settings. **No wallet stub** *(council — economy is out of scope; dead code
   invites drift; Iteration 2 adds its own store under schema versioning)*.
@@ -103,7 +104,10 @@ The riskiest code, built first, headless.
   reordering slices *(council)*.
 - Home: library grid of saved puzzles (resume/replay/delete) or first-run CTA → create flow.
   Mid-puzzle refresh resumes exactly.
-- **Accept:** create → play half → refresh → resume; delete works; first-run CTA state renders.
+- Home ambience loop (small bundled CC0 file) starts on first user gesture, pauses on hidden
+  tab; volume/toggle persisted in settings (owner sound directive).
+- **Accept:** create → play half → refresh → resume; delete works; first-run CTA state renders;
+  ambience audibly plays after first interaction and respects the toggle.
 
 ## Slice order & dependencies
 a → b → c → d (d needs c's grid data) → e (needs b's pipeline) → f (needs d's fill state).

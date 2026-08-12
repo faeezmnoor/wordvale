@@ -87,8 +87,37 @@ confetti, coin idle-bounce, button hover-press — all steps() easing, live in t
 quality phrases ("nice & knotty") · pixel sprite icon set (pencil/gift/camera/mic + 8 themes +
 star/lock/chevron/sun).
 **Build-only (choreography needs the real app):** tile-pop solve cascade (40ms/tile stagger,
-total capped at 400ms) · coin flight to wallet · idle mascot blink every ~6s · sound hooks:
-place, solve, complete (mute default, toggle in top bar on ALL screens incl. mobile).
+total capped at 400ms) · coin flight to wallet · idle mascot blink every ~6s · full sound
+design per the section below.
+
+## Sound design (owner directive at Stage-2 approval, 2026-08-12)
+
+**Palette:** warm, soft, organic-chiptune — plucks, marimba-like tones, gentle nature ambience.
+Stardew's register: cozy and quiet, never arcade-loud. Nothing longer than ~1.5s except loops.
+
+| Moment | Sound | Notes |
+|---|---|---|
+| Letter typed / placed | soft wood-block pluck | pitch rises subtly with word progress |
+| Word solved | 3-note ascending arpeggio | + tile-pop cascade sync |
+| Wrong check | muted low thud | gentle, not punishing (matches berry flash) |
+| Coin collected | bright short ding | one per coin burst, max 3 stacked |
+| Puzzle complete | 5-note fanfare + coin jingle | syncs with confetti |
+| Button press / tab switch | woody click | every interactive element |
+| On-screen keyboard key | tiny tick | quieter than grid pluck |
+| Regenerate | shuffle whoosh | with the grid re-place animation |
+| Home ambience | birds + soft breeze loop | very low volume, loops seamlessly |
+
+**Architecture & rules (spec detail in Stage 3):**
+- SFX are **synthesized at runtime via Web Audio** (tiny sfx module, zero asset weight, easy to
+  tune); the home ambience loop is one small bundled CC0 audio file.
+- Browsers block audio before the first user gesture — ambience starts on first interaction,
+  never on load. No autoplay violations.
+- **Default ON** (SFX ~60%, ambience ~30%) — sound is part of the experience per the owner;
+  top-bar toggle on every screen, state persisted in localStorage settings.
+- Max 3 simultaneous SFX; all one-shots ≤400ms except fanfares; ambience pauses when the tab
+  is hidden (Page Visibility API).
+- Slice placement: play/interaction SFX land in slice d; ambience + home sounds in slice f.
+  Theme-specific music beds stay in the backlog.
 
 ## Component inventory (new in this iteration)
 Segmented tab control · word chip (valid/problem/placed variants) · textarea panel ·

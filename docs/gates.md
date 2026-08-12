@@ -7,8 +7,8 @@
 
 | Gate | When | Pass bar | On failure |
 |---|---|---|---|
-| `/council-review` (full) | Stage 1–3 docs, full-cycle iterations | Every advisor objection either fixed in the doc or recorded under "accepted risks" with a reason | Amend doc, re-check the specific objection (no full re-run needed for wording fixes) |
-| `/council-review --quick` | Light-cycle mini-specs | Same | Same |
+| `/council-review` (full) | Stage-1 plans of full-cycle iterations | Every advisor objection either fixed in the doc or recorded under "accepted risks" with a reason | Amend doc, re-check the specific objection (no full re-run needed for wording fixes) |
+| `/council-review --quick` | Stage-2/3 docs and light-cycle mini-specs *(contract amended 2026-08-12, owner default-approved: these docs inherit a fully-councilled plan)* | Same | Same |
 | `/review` | End of every dev slice | No correctness findings open; simplification findings fixed or consciously declined in the build log | Fix before the next slice starts |
 | `bun run check` | Before every commit | tsc + oxlint + tests all green | No commit until green |
 | `/qa-only` smoke | End of every dev slice | Core flow of the slice works in a real browser | Fix before commit |
