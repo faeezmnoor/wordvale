@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react'
 
 const MIN_TILE = 24
-const MAX_TILE = 72
+const MAX_TILE = 128 // small grids must still fill the panel (owner space directive)
 const GAP = 3
 
 export interface CellView {

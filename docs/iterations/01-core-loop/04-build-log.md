@@ -64,3 +64,31 @@ mascot). Smoke-tested in browser: full flow, regenerate, edit round-trip — no 
 full 8-angle review reserved for slice d/f per momentum ruling).
 **G-accept:** `bun run dev` → Create your first crossword → paste any list (try including
 "kuih lapis" and a lone "xyz" to see the chips) → Generate → Review → Regenerate.
+
+## Slice d — play screen (2026-08-12)
+
+**Goal:** the game itself — keyboard-first play, no drag, responsive, celebration + sound.
+**Shipped:** pure `playMachine.ts` reducer (canonical single fill store; select-&-type with
+auto-advance and silent auto-solve; select-&-place with compatibility by length + locked letters
+and overwrite-with-flash; Tab/Shift-Tab word cycling; arrows; Backspace clear→retreat→stay;
+explicit Check with berry flash; locked-cell no-ops; direction toggle only at real crossings),
+10 unit tests covering every one of those paths · `PixelKeyboard` (summoned on focus, coarse
+pointers only) · `Celebration` (stepped confetti, score/coins, sprout bloom) · `audio/sfx.ts`
+(Web-Audio pluck/arpeggio/thud/ding/fanfare/click/tick, 3-voice cap, defaults ON per owner) ·
+`state/settings.ts` (localStorage) · `state/economy.ts` (all game constants) · progress sprout
+with 4 growth stages.
+
+**Fixes from the slice-b/c review (blocker + 4 majors):** "Try again" was deterministic
+(fixed seed → identical failure forever) — now an attempt counter; Regenerate wedged after a
+rejected result — seed now advances every attempt with a "kept the better layout" note; editing
+during a pending worker desynced draft words — request snapshot + `acceptPartial` derives kept
+words from `result.placements`; isolate words were silently dropped — now a confirmation panel;
+`▶ ⟳ ➜ ✔ ⌫` glyphs replaced with pixel sprites (emoji/dingbat ban); worker error handler so
+"Weaving…" can't hang; dead `lastPre` store field removed; render-phase navigation → effects.
+
+**Measured:** `MAX_TILE` raised 72 → 128 so small grids still fill the panel (owner space
+directive); browser smoke: bank-select highlights only truly compatible slots (7-letter word →
+1 slot), place → lock + coins + strike-through, full solve → celebration, zero console errors.
+
+**G-accept:** `bun run dev` → make a puzzle → Play. Try both paths: click a cell and type, or
+tap a bank word then a highlighted slot. Tab cycles words. Sound is on.
