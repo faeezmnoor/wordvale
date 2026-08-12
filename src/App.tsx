@@ -1,16 +1,16 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { boundsOf, cellsOf, type Placement } from './engine'
+
+// Dev-only: lazy so the harness (and its debug UI) stays out of the production bundle.
+const DebugHarness = lazy(() => import('./ui/DebugHarness'))
+const showHarness =
+  import.meta.env.DEV &&
+  typeof window !== 'undefined' &&
+  new URLSearchParams(window.location.search).has('harness')
 
 // Iteration-0 design preview + ADR-001 spike substrate (docs/gates.md → exemptions).
-// Hardcoded legal kriss-kross layout — the real generator lands in Iteration 1.
-// Throwaway-allowed: no engine imports, no persistence.
-
-type Dir = 'across' | 'down'
-interface Placement {
-  word: string
-  row: number
-  col: number
-  dir: Dir
-}
+// Hardcoded legal kriss-kross layout; geometry helpers come from the engine (single source).
+// Throwaway-allowed: replaced by real screens in slices b–f.
 
 const PLACEMENTS: Placement[] = [
   { word: 'HARVEST', row: 7, col: 3, dir: 'across' },
@@ -26,27 +26,18 @@ const COINS_PER_WORD = 5
 const MIN_TILE = 24
 const MAX_TILE = 72
 
-function cellsOf(p: Placement): { r: number; c: number; letter: string }[] {
-  return p.word.split('').map((letter, i) => ({
-    r: p.dir === 'down' ? p.row + i : p.row,
-    c: p.dir === 'across' ? p.col + i : p.col,
-    letter,
-  }))
-}
-
-// Bounding box of all placements — the grid renders ONLY this, so the puzzle
-// fills its panel instead of floating inside a fixed 15x15 (owner feedback 2026-08-12).
-function boundsOf(placements: Placement[]) {
-  let minR = Infinity, maxR = -Infinity, minC = Infinity, maxC = -Infinity
-  for (const p of placements)
-    for (const { r, c } of cellsOf(p)) {
-      minR = Math.min(minR, r); maxR = Math.max(maxR, r)
-      minC = Math.min(minC, c); maxC = Math.max(maxC, c)
-    }
-  return { minR, minC, rows: maxR - minR + 1, cols: maxC - minC + 1 }
-}
-
 export default function App() {
+  if (showHarness) {
+    return (
+      <Suspense fallback={null}>
+        <DebugHarness />
+      </Suspense>
+    )
+  }
+  return <Preview />
+}
+
+function Preview() {
   const [placed, setPlaced] = useState<Set<string>>(new Set())
   const [coins, setCoins] = useState(0)
   const [coinBump, setCoinBump] = useState(0)

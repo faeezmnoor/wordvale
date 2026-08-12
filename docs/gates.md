@@ -39,6 +39,9 @@ real pixel font, real palette, hardcoded 15×15 grid, one tile-fill animation �
 - The Iteration-0 **spike/preview UI is exempt** from the "no real UI in Iteration 0" rule — it
   *is* the design-approval artifact and the ADR-001 substrate. It is throwaway-allowed code and
   carries no G-accept.
+- **Dev-only tools** (`?harness` debug harness and future debug routes, dev-gated and excluded
+  from production bundles) are exempt from the design system — they are instruments, not product
+  UI. *(Added at slice-a review, 2026-08-12.)*
 
 ## Timeboxes
 

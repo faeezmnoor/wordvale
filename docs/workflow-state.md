@@ -3,11 +3,10 @@
 > Resume point for any session. Update after every stage transition and every gate.
 
 - **Current iteration:** 01-core-loop (full cycle)
-- **Current stage:** Stage 3 complete pending owner gate
-- **Open AI gates:** none — quick council PASS on 03-tech-spec.md, amendments applied
-- **Open owner gates:** **Stage-3 build authorization** — plain-language summary delivered in
-  chat. Approve = slices a→f build back-to-back with per-slice AI gates + async G-accepts;
-  no further blocking owner input until Stage-5 SHIP.
+- **Current stage:** Stage 4 — Development (build authorized 2026-08-12)
+- **Open AI gates:** per-slice (check green, /review, /qa-only smoke)
+- **Open owner gates:** async G-accepts per slice (gate SHIP, not progress); next blocking
+  owner gate is Stage-5 SHIP.
 - **Owner feedback routed:** see [iterations/01-core-loop/00-owner-feedback.md](iterations/01-core-loop/00-owner-feedback.md)
 
 ## Gate log
@@ -25,4 +24,4 @@
 | 2026-08-12 | 01 | Quick council + devil's advocate on 02-design.md | **PASS with amendments** — mobile keyboard = summoned overlay; live motion added to mockups (DA catch); Stage-3 appendix mandated. Deviation: quick not full council (recorded; contract amendment proposed) |
 | 2026-08-12 | 01 | Owner gate (Stage-2 design) | **PASS — approved** + sound directive (SFX + home ambience → I1 scope; design spec §Sound); council-sizing amendment default-approved → gates.md |
 | 2026-08-12 | 01 | Quick council on 03-tech-spec.md | **PASS with amendments** (applied): backtracking pseudocode + forced fixture, canonical fill model, Tab/Backspace semantics, self-play rubric, slice-b fixtures. DA skipped — no decision tension (recorded) |
-| 2026-08-12 | 01 | Owner gate (Stage-3 build authorization) | **PENDING — Faeez** |
+| 2026-08-12 | 01 | Owner gate (Stage-3 build authorization) | **PASS — "Proceed with build"** |
