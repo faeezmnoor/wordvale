@@ -1,0 +1,117 @@
+/* WordVale design tokens — canonical definitions in DESIGN.md */
+:root {
+  --ink: #3b2a1e;
+  --ink-soft: #6b5744;
+  --parchment: #f1e3c3;
+  --parchment-hi: #faf1dc;
+  --wood: #8a5a38;
+  --wood-dark: #5b3a24;
+  --meadow: #5fa344;
+  --meadow-dark: #3f7a2e;
+  --sky: #5a9bd8;
+  --gold: #e8b33c;
+  --berry: #c24b3f;
+
+  --font-display: 'Pixelify Sans', sans-serif;
+  --font-grid: 'Silkscreen', monospace;
+  --font-body: 'DM Sans', sans-serif;
+
+  --tile: 32px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--parchment);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.5;
+  /* subtle pixel-checker ground so parchment doesn't read flat */
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      rgba(91, 58, 36, 0.03) 0px,
+      rgba(91, 58, 36, 0.03) 2px,
+      transparent 2px,
+      transparent 8px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(91, 58, 36, 0.03) 0px,
+      rgba(91, 58, 36, 0.03) 2px,
+      transparent 2px,
+      transparent 8px
+    );
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  margin: 0;
+}
+
+/* Wooden panel — hard pixel depth, never blur/radius (DESIGN.md → Layout) */
+.panel {
+  background: var(--parchment-hi);
+  border: 3px solid var(--wood-dark);
+  box-shadow: 4px 4px 0 rgba(91, 58, 36, 0.35);
+}
+
+.btn {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  color: var(--parchment-hi);
+  background: var(--meadow);
+  border: 3px solid var(--meadow-dark);
+  box-shadow: 3px 3px 0 rgba(91, 58, 36, 0.35);
+  padding: 8px 20px;
+  cursor: pointer;
+}
+.btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 rgba(91, 58, 36, 0.35);
+}
+
+/* Tile-fill pop: stepped, pixel-authentic (DESIGN.md → Motion) */
+@keyframes tile-pop {
+  0% {
+    transform: scale(0.6);
+  }
+  50% {
+    transform: scale(1.12);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+.cell-letter-enter {
+  animation: tile-pop 180ms steps(3, end);
+}
+
+@keyframes coin-bounce {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+.coin-bump {
+  animation: coin-bounce 300ms steps(4, end);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cell-letter-enter,
+  .coin-bump {
+    animation: none;
+  }
+}
