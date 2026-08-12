@@ -1,0 +1,34 @@
+{
+  "slug": "fantasy",
+  "name": "Fantasy",
+  "sprite": "dragon",
+  "lists": [
+    [
+      "WIZARD",
+      "POTION",
+      "CASTLE",
+      "DRAGON",
+      "QUEST",
+      "SWORD",
+      "RUNE"
+    ],
+    [
+      "ELF",
+      "TROLL",
+      "GOBLIN",
+      "SORCERER",
+      "GRIMOIRE",
+      "AMULET",
+      "SCROLL"
+    ],
+    [
+      "KNIGHT",
+      "DUNGEON",
+      "LANTERN",
+      "TAVERN",
+      "MERCHANT",
+      "RELIC",
+      "CHARM"
+    ]
+  ]
+}

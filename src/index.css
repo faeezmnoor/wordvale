@@ -282,3 +282,16 @@ h3 {
 @media (prefers-reduced-motion: reduce) {
   .caret, .cell-wrong, .confetti { animation: none; }
 }
+
+.themes { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; }
+.theme {
+  padding: 14px;
+  text-align: center;
+  cursor: pointer;
+  font-family: inherit;
+  color: inherit;
+}
+.theme:disabled { cursor: default; opacity: 1; }
+.theme h3 { font-size: 1rem; margin: 6px 0 2px; }
+.theme .size { font-family: var(--font-grid); font-size: 0.75rem; color: var(--ink-soft); }
+.theme:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0 rgba(91, 58, 36, 0.25); }

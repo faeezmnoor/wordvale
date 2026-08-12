@@ -1,0 +1,34 @@
+{
+  "slug": "malaysia",
+  "name": "Malaysia",
+  "sprite": "palm",
+  "lists": [
+    [
+      "PENANG",
+      "SABAH",
+      "MELAKA",
+      "JOHOR",
+      "PERAK",
+      "KEDAH",
+      "SELANGOR"
+    ],
+    [
+      "DURIAN",
+      "RAMBUTAN",
+      "MANGGIS",
+      "PISANG",
+      "KELAPA",
+      "MANGGA",
+      "NANAS"
+    ],
+    [
+      "MERDEKA",
+      "PETRONAS",
+      "BATIK",
+      "WAYANG",
+      "GAMELAN",
+      "SEPAK",
+      "KAMPUNG"
+    ]
+  ]
+}

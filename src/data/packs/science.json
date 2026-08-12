@@ -1,0 +1,34 @@
+{
+  "slug": "science",
+  "name": "Science",
+  "sprite": "flask",
+  "lists": [
+    [
+      "ATOM",
+      "ENERGY",
+      "MATTER",
+      "GRAVITY",
+      "MOTION",
+      "ORBIT",
+      "PHOTON"
+    ],
+    [
+      "CELL",
+      "ENZYME",
+      "PROTEIN",
+      "NUCLEUS",
+      "OSMOSIS",
+      "MEMBRANE",
+      "GENOME"
+    ],
+    [
+      "COMET",
+      "GALAXY",
+      "NEBULA",
+      "METEOR",
+      "PLANET",
+      "ECLIPSE",
+      "STELLAR"
+    ]
+  ]
+}

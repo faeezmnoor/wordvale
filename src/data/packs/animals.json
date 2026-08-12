@@ -1,0 +1,32 @@
+{
+  "slug": "animals",
+  "name": "Animals",
+  "sprite": "fox",
+  "lists": [
+    [
+      "HORSE",
+      "SHEEP",
+      "RABBIT",
+      "GOAT",
+      "DONKEY",
+      "OTTER"
+    ],
+    [
+      "TIGER",
+      "EAGLE",
+      "SALMON",
+      "BEETLE",
+      "LIZARD",
+      "PANDA",
+      "HERON"
+    ],
+    [
+      "ELEPHANT",
+      "GIRAFFE",
+      "LEOPARD",
+      "GAZELLE",
+      "MEERKAT",
+      "OSTRICH"
+    ]
+  ]
+}

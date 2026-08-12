@@ -1,6 +1,8 @@
 import { useMemo, useRef, useState } from 'react'
 import { MAX_WORDS, MIN_WORDS, precheck, type GenResult } from '../../engine'
 import { useApp } from '../../state/store'
+import { PACKS, packSizeLabel } from '../../data/packs'
+import { ThemeSprite } from '../components/ThemeSprites'
 import { useGenerate } from '../useGenerate'
 import { TopBar } from '../components/TopBar'
 import {
@@ -28,6 +30,8 @@ export default function Create() {
   const [failure, setFailure] = useState<GenResult | null>(null)
   const [seed] = useState(() => (Date.now() % 100000) + 1)
   const attempt = useRef(0)
+  const packPick = useRef(0)
+  const [packTitle, setPackTitle] = useState<string | null>(null)
   // words actually sent to the worker — the live `pre` may change while it runs
   const requested = useRef<string[]>([])
 
@@ -37,7 +41,7 @@ export default function Create() {
   const { request, pending } = useGenerate((result) => {
     if (result.status === 'complete') {
       const words = requested.current
-      setDraft({ words, result, title: words.slice(0, 2).join(' · ').toLowerCase() })
+      setDraft({ words, result, title: packTitle ?? words.slice(0, 2).join(' · ').toLowerCase() })
       setFailure(null)
       go('review')
     } else {
@@ -49,6 +53,7 @@ export default function Create() {
     setFailure(null)
     requested.current = pre.valid
     attempt.current += 1
+    setPackTitle(null)
     request(pre.valid, seed + attempt.current) // new seed every attempt (Try again must differ)
   }
 
@@ -88,6 +93,7 @@ export default function Create() {
             onChange={(e) => {
               setCreateText(e.target.value)
               setFailure(null)
+              setPackTitle(null)
             }}
             rows={7}
           />
@@ -123,9 +129,30 @@ export default function Create() {
 
       {tab === 'surprise' && (
         <section className="panel" style={{ padding: 20 }}>
-          <p style={{ color: 'var(--ink-soft)', margin: 0 }}>
-            Themed packs arrive with the next slice — for now, bring your own words!
-          </p>
+          <div className="themes">
+            {PACKS.map((pack) => (
+              <button
+                key={pack.slug}
+                className="panel theme"
+                disabled={pending}
+                onClick={() => {
+                  // rotate lists per press so repeat taps give a fresh set
+                  const list = pack.lists[packPick.current % pack.lists.length]
+                  packPick.current += 1
+                  const pre = precheck(list)
+                  requested.current = pre.valid
+                  attempt.current += 1
+                  setFailure(null)
+                  setPackTitle(pack.name)
+                  request(pre.valid, seed + attempt.current)
+                }}
+              >
+                <ThemeSprite name={pack.sprite} />
+                <h3>{pack.name}</h3>
+                <div className="size">{packSizeLabel(pack)}</div>
+              </button>
+            ))}
+          </div>
         </section>
       )}
 

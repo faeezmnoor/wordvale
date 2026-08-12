@@ -1,0 +1,36 @@
+{
+  "slug": "food",
+  "name": "Food & Cooking",
+  "sprite": "bowl",
+  "lists": [
+    [
+      "RENDANG",
+      "SATAY",
+      "LAKSA",
+      "SAMBAL",
+      "KAYA",
+      "ROTI",
+      "NASI",
+      "TEH"
+    ],
+    [
+      "NOODLE",
+      "PEPPER",
+      "GARLIC",
+      "BUTTER",
+      "TOMATO",
+      "CHEESE",
+      "ONION",
+      "BASIL"
+    ],
+    [
+      "PANDAN",
+      "COCONUT",
+      "TAMARIND",
+      "LEMONGRASS",
+      "GINGER",
+      "CHILLI",
+      "PALM"
+    ]
+  ]
+}

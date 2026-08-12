@@ -1,0 +1,35 @@
+{
+  "slug": "travel",
+  "name": "Travel",
+  "sprite": "plane",
+  "lists": [
+    [
+      "AIRPORT",
+      "SUITCASE",
+      "PASSPORT",
+      "TICKET",
+      "HOTEL",
+      "BEACH",
+      "MARKET"
+    ],
+    [
+      "PARIS",
+      "TOKYO",
+      "LONDON",
+      "CAIRO",
+      "SYDNEY",
+      "LIMA",
+      "OSLO",
+      "MADRID"
+    ],
+    [
+      "TRAIN",
+      "FERRY",
+      "HOSTEL",
+      "SUNSET",
+      "ISLAND",
+      "CAMERA",
+      "SANDAL"
+    ]
+  ]
+}

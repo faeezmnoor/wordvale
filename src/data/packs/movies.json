@@ -1,0 +1,34 @@
+{
+  "slug": "movies",
+  "name": "Movies & TV",
+  "sprite": "clapper",
+  "lists": [
+    [
+      "ACTOR",
+      "SCRIPT",
+      "CAMERA",
+      "SCENE",
+      "STUDIO",
+      "TRAILER",
+      "CREDITS"
+    ],
+    [
+      "COMEDY",
+      "HORROR",
+      "ROMANCE",
+      "THRILLER",
+      "DRAMA",
+      "ANIME",
+      "SITCOM"
+    ],
+    [
+      "DIRECTOR",
+      "PRODUCER",
+      "EDITOR",
+      "COSTUME",
+      "STUNT",
+      "SEQUEL",
+      "REMAKE"
+    ]
+  ]
+}
