@@ -55,8 +55,8 @@ sprite) right; back arrow (pixel chevron) on non-Home screens.
 
 ## 4. Play
 - **Layout ≥900px:** grid panel (flex-1) + right sidebar (word bank, progress, Check button).
-  **<900px:** top bar → grid (fills width) → word-bank chips (wrap) → on-screen keyboard
-  docked at bottom when a slot is focused.
+  **<900px:** top bar → grid (fills width) → word-bank chips (wrap); the on-screen keyboard
+  appears as a summoned overlay per below, never in the base layout.
 - **Grid:** bounding-box render, fitted integer tiles 24–72px (≥70% of panel's limiting
   dimension). Focused word's run = sky-tinted cells with 3px sky border; focused cell = gold
   border + blinking underscore caret (steps(2), 1s). Solved words lock meadow with stepped pop
