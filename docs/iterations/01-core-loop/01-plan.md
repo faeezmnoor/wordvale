@@ -60,16 +60,25 @@ The riskiest code, built first, headless.
 - **Accept:** regenerate produces a visibly different legal layout ≤ 2s; edit round-trips the list.
 
 ### d. Play screen — keyboard-first (owner comment #3), responsive (owner comment #1)
-- **Input model (hard requirements):** click/tap a slot cell to focus its word (highlight the
-  run); type letters directly — auto-advance within the word; **Tab / Shift-Tab cycles words**;
-  arrow keys move across the grid; Backspace clears and retreats; typing over a crossing updates
-  both words; Enter checks the focused word. On touch: tapping a cell raises the soft keyboard
-  (hidden input technique); word bank chips remain tappable as the coarse-pointer path.
+- **Input model (hard requirements — NO drag-and-drop anywhere, owner directive 2026-08-12):**
+  two selection-based paths, both required:
+  1. *Select & type:* click/tap a slot cell to focus its word (highlight the run); type letters
+     directly — auto-advance within the word; **Tab / Shift-Tab cycles words**; arrow keys move
+     across the grid; Backspace clears and retreats; typing over a crossing updates both words;
+     Enter checks the focused word.
+  2. *Select & place:* tap a word in the bank → compatible slots highlight → tap a slot to place
+     the whole word there (wrong slot = gentle shake, no penalty in v1).
+  On touch, typing uses a **custom on-screen pixel keyboard** (owner-gate default Q3) — reliable
+  on all browsers, on-theme, no iOS soft-keyboard fiddliness.
 - **Solve model:** a word is solved when all its cells match; solved cells lock (meadow green,
   stepped pop). Wrong letters stay neutral in v1 (no red mark) — checking is explicit.
-- **Responsive layout:** grid renders its **bounding box** (not the raw 15×15), centered, tile
-  size = clamp(24px, fit-to-viewport, 48px) at integer pixel sizes; ≥ 900px: grid + side panel;
-  < 900px: grid on top, word bank as wrapping chips below; no horizontal page scroll at any width.
+- **Responsive layout / space optimization (owner directive 2026-08-12, verified in the
+  amended Iteration-0 preview):** grid renders its **bounding box** (never the raw generation
+  grid), centered, tile size = largest integer in 24–72px that fits the container (ResizeObserver
+  fit, as prototyped in `src/App.tsx` `FittedGrid`); the grid must visibly fill its panel —
+  acceptance: grid occupies ≥70% of the puzzle panel's limiting dimension on desktop and mobile.
+  ≥ 900px: grid + side panel; < 900px: grid on top, word bank as wrapping chips below; no
+  horizontal page scroll at any width.
 - **Fun bar (owner comment #4):** puzzle-complete celebration (pixel confetti + banner), tile-pop
   on every solve, idle sprite in the header, decorative flora corners on panels. Sound effects
   stubbed behind a mute-default toggle (assets land here only if slice time allows, else Iter 4).
@@ -104,18 +113,23 @@ e can interleave after b if d drags.
 Economy/coins beyond the visual stub (Iter 2), OCR (Iter 3), voice (Iter 4), difficulty
 mechanics (backlog — engine merely stays neutral to them), dark mode, sharing, clue layers.
 
-## Open questions for Faeez (riding this gate — no new gates added)
-1. **Grid-labeling model** *(design-blocking)*: when the puzzle starts, are slots pure inference
-   (only lengths + intersections guide you — classic kriss-kross, harder) or lightly guided
-   (e.g. the longest word pre-filled as an anchor, common in print kriss-kross)?
-2. **What does "core loop works" mean to you** — grids merely legal, satisfying to solve, or
-   "I'd come back tomorrow"? This sets the acceptance bar for the generator.
-3. **Mobile input:** custom on-screen pixel keyboard (Wordle-style — reliable everywhere, more
-   build, on-theme) or the phone's native keyboard (less work, ~30–40% base rate of fiddliness
-   on iOS Safari)?
-4. **Wrong-letter feedback:** v1 keeps checking explicit (Enter/`Check`) rather than
-   auto-marking errors red — matches "cozy, not punishing". OK, or prefer instant feedback?
-5. **Packs list:** happy with the 8 themes? Add/remove (e.g. Kids, Bahasa Melayu)?
+## Owner gate outcome (2026-08-12): **APPROVED** with two directives
+1. **Space optimization is a hard requirement** — grids were rendering too small in their panel;
+   fixed in the Iteration-0 preview (bounding-box render + fit-to-container tiles) and folded
+   into slice-d acceptance (≥70% panel fill).
+2. **No drag-and-drop.** Input is text entry and selection only (select word / select slot).
+   Folded into slice-d input model.
+
+The 5 gate questions were not individually answered; per Faeez's standing default-to-action
+rule, these **defaults are adopted** (overridable any time before slice d builds — say the word):
+- **Q1 grid model:** pure inference — empty slots, lengths + intersections + word bank guide you
+  (classic kriss-kross). No pre-filled anchor; difficulty variants stay in backlog.
+- **Q2 "core loop works" bar:** *satisfying to solve* — grids must pass dev self-play ≥3/5, not
+  merely be legal; "come back tomorrow" retention is Iteration-2+ territory.
+- **Q3 mobile input:** custom on-screen pixel keyboard (consistent with the no-drag,
+  input-must-be-easy directive; avoids the iOS soft-keyboard trap).
+- **Q4 wrong letters:** neutral until explicit Check (cozy, not punishing).
+- **Q5 packs:** the 8 listed themes ship as-is.
 
 Difficulty brainstorm stays parked in backlog.md (7 candidate mechanics); nothing here blocks them.
 

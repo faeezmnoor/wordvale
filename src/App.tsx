@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 // Iteration-0 design preview + ADR-001 spike substrate (docs/gates.md → exemptions).
 // Hardcoded legal kriss-kross layout — the real generator lands in Iteration 1.
@@ -12,7 +12,6 @@ interface Placement {
   dir: Dir
 }
 
-const SIZE = 15
 const PLACEMENTS: Placement[] = [
   { word: 'HARVEST', row: 7, col: 3, dir: 'across' },
   { word: 'APPLE', row: 7, col: 4, dir: 'down' },
@@ -24,6 +23,8 @@ const PLACEMENTS: Placement[] = [
 ]
 
 const COINS_PER_WORD = 5
+const MIN_TILE = 24
+const MAX_TILE = 72
 
 function cellsOf(p: Placement): { r: number; c: number; letter: string }[] {
   return p.word.split('').map((letter, i) => ({
@@ -33,25 +34,40 @@ function cellsOf(p: Placement): { r: number; c: number; letter: string }[] {
   }))
 }
 
+// Bounding box of all placements — the grid renders ONLY this, so the puzzle
+// fills its panel instead of floating inside a fixed 15x15 (owner feedback 2026-08-12).
+function boundsOf(placements: Placement[]) {
+  let minR = Infinity, maxR = -Infinity, minC = Infinity, maxC = -Infinity
+  for (const p of placements)
+    for (const { r, c } of cellsOf(p)) {
+      minR = Math.min(minR, r); maxR = Math.max(maxR, r)
+      minC = Math.min(minC, c); maxC = Math.max(maxC, c)
+    }
+  return { minR, minC, rows: maxR - minR + 1, cols: maxC - minC + 1 }
+}
+
 export default function App() {
   const [placed, setPlaced] = useState<Set<string>>(new Set())
   const [coins, setCoins] = useState(0)
   const [coinBump, setCoinBump] = useState(0)
 
+  const bounds = useMemo(() => boundsOf(PLACEMENTS), [])
+
   const slotLetters = useMemo(() => {
     const m = new Map<string, string>()
-    for (const p of PLACEMENTS) for (const cell of cellsOf(p)) m.set(`${cell.r},${cell.c}`, cell.letter)
+    for (const p of PLACEMENTS)
+      for (const cell of cellsOf(p)) m.set(`${cell.r - bounds.minR},${cell.c - bounds.minC}`, cell.letter)
     return m
-  }, [])
+  }, [bounds])
 
   const filled = useMemo(() => {
     const m = new Map<string, string>()
     for (const p of PLACEMENTS) {
       if (!placed.has(p.word)) continue
-      for (const cell of cellsOf(p)) m.set(`${cell.r},${cell.c}`, cell.letter)
+      for (const cell of cellsOf(p)) m.set(`${cell.r - bounds.minR},${cell.c - bounds.minC}`, cell.letter)
     }
     return m
-  }, [placed])
+  }, [placed, bounds])
 
   const placeWord = useCallback((word: string) => {
     setPlaced((prev) => {
@@ -67,7 +83,7 @@ export default function App() {
   const allDone = placed.size === PLACEMENTS.length
 
   return (
-    <div style={{ maxWidth: 960, margin: '0 auto', padding: 16 }}>
+    <div style={{ maxWidth: 1100, margin: '0 auto', padding: 16, minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       <header
         className="panel"
         style={{
@@ -97,15 +113,18 @@ export default function App() {
         </div>
       </header>
 
-      <main style={{ display: 'flex', gap: 16, flexWrap: 'wrap', alignItems: 'flex-start' }}>
-        <section className="panel" style={{ padding: 16 }}>
-          <Grid slotLetters={slotLetters} filled={filled} />
+      <main style={{ display: 'flex', gap: 16, flexWrap: 'wrap', alignItems: 'stretch', flex: 1 }}>
+        <section
+          className="panel"
+          style={{ padding: 16, flex: '1 1 480px', display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: 420 }}
+        >
+          <FittedGrid rows={bounds.rows} cols={bounds.cols} slotLetters={slotLetters} filled={filled} />
         </section>
 
-        <aside className="panel" style={{ padding: 16, flex: 1, minWidth: 240 }}>
+        <aside className="panel" style={{ padding: 16, flex: '0 1 300px', minWidth: 250 }}>
           <h2 style={{ fontSize: '1.2rem', marginBottom: 4 }}>Word bank</h2>
           <p style={{ color: 'var(--ink-soft)', fontSize: '0.875rem', marginTop: 0 }}>
-            Tap a word to place it. (Preview: real play is drag/type, Iteration 1.)
+            Tap a word to place it. (Preview: real play is select &amp; type, Iteration 1.)
           </p>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
             {PLACEMENTS.map((p) => (
@@ -150,41 +169,76 @@ export default function App() {
   )
 }
 
-function Grid({ slotLetters, filled }: { slotLetters: Map<string, string>; filled: Map<string, string> }) {
+// Measures its container and picks the largest integer tile size that fits both
+// dimensions (clamped MIN_TILE..MAX_TILE) — the space-optimization contract from
+// the Iteration-1 plan, demonstrated here.
+function FittedGrid({
+  rows,
+  cols,
+  slotLetters,
+  filled,
+}: {
+  rows: number
+  cols: number
+  slotLetters: Map<string, string>
+  filled: Map<string, string>
+}) {
+  const wrapRef = useRef<HTMLDivElement>(null)
+  const [tile, setTile] = useState(40)
+  const gap = 3
+
+  useEffect(() => {
+    const el = wrapRef.current
+    if (!el) return
+    const fit = () => {
+      const w = el.clientWidth
+      const h = el.clientHeight
+      const fitW = Math.floor((w - gap * (cols - 1)) / cols)
+      const fitH = Math.floor((h - gap * (rows - 1)) / rows)
+      setTile(Math.max(MIN_TILE, Math.min(MAX_TILE, fitW, fitH)))
+    }
+    fit()
+    const ro = new ResizeObserver(fit)
+    ro.observe(el)
+    return () => ro.disconnect()
+  }, [rows, cols])
+
   return (
-    <div
-      style={{
-        display: 'grid',
-        gridTemplateColumns: `repeat(${SIZE}, var(--tile))`,
-        gridTemplateRows: `repeat(${SIZE}, var(--tile))`,
-        gap: 2,
-      }}
-    >
-      {Array.from({ length: SIZE * SIZE }, (_, i) => {
-        const r = Math.floor(i / SIZE)
-        const c = i % SIZE
-        const key = `${r},${c}`
-        const isSlot = slotLetters.has(key)
-        const letter = filled.get(key)
-        if (!isSlot) return <div key={key} />
-        return (
-          <div
-            key={key}
-            style={{
-              background: letter ? 'var(--meadow)' : 'var(--parchment-hi)',
-              border: `2px solid ${letter ? 'var(--meadow-dark)' : 'var(--wood-dark)'}`,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              fontFamily: 'var(--font-grid)',
-              fontSize: 18,
-              color: 'var(--parchment-hi)',
-            }}
-          >
-            {letter && <span className="cell-letter-enter">{letter}</span>}
-          </div>
-        )
-      })}
+    <div ref={wrapRef} style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <div
+        style={{
+          display: 'grid',
+          gridTemplateColumns: `repeat(${cols}, ${tile}px)`,
+          gridTemplateRows: `repeat(${rows}, ${tile}px)`,
+          gap,
+        }}
+      >
+        {Array.from({ length: rows * cols }, (_, i) => {
+          const r = Math.floor(i / cols)
+          const c = i % cols
+          const key = `${r},${c}`
+          const isSlot = slotLetters.has(key)
+          const letter = filled.get(key)
+          if (!isSlot) return <div key={key} />
+          return (
+            <div
+              key={key}
+              style={{
+                background: letter ? 'var(--meadow)' : 'var(--parchment-hi)',
+                border: `3px solid ${letter ? 'var(--meadow-dark)' : 'var(--wood-dark)'}`,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontFamily: 'var(--font-grid)',
+                fontSize: Math.round(tile * 0.5),
+                color: 'var(--parchment-hi)',
+              }}
+            >
+              {letter && <span className="cell-letter-enter">{letter}</span>}
+            </div>
+          )
+        })}
+      </div>
     </div>
   )
 }

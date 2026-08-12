@@ -3,15 +3,12 @@
 > Resume point for any session. Update after every stage transition and every gate.
 
 - **Current iteration:** 01-core-loop (full cycle)
-- **Current stage:** Stage 1 complete pending owner gate
-- **Open AI gates:** none — full council PASSED the plan with amendments (applied)
-- **Open owner gates:** **Stage-1 plan approval + 5 questions** (grid-labeling model, "core loop
-  works" definition, mobile input method, wrong-letter feedback, packs list — see plan §Open
-  questions). Also still owed: native-DPR device check of the Iteration-0 preview (amendment-only
-  if issues found).
+- **Current stage:** Stage 2 — Design
+- **Open AI gates:** council + design-review on the Stage-2 design spec/mockups (when ready)
+- **Open owner gates:** none blocking — Stage-1 **approved 2026-08-12** with two directives
+  (space optimization hard requirement; NO drag-and-drop — selection + typing only) and 5
+  defaults adopted (see plan §Owner gate outcome; overridable before slice d builds)
 - **Owner feedback routed:** see [iterations/01-core-loop/00-owner-feedback.md](iterations/01-core-loop/00-owner-feedback.md)
-- **On approval:** Stage 2 design starts immediately (home/library/review surfaces are
-  unambiguous and can be designed while play-screen design waits on Q1/Q3 answers)
 
 ## Gate log
 
