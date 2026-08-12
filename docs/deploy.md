@@ -4,7 +4,7 @@ The app is a static client-side build (`dist/`) — no server, no env vars, no s
 Anything that serves static files works; Vercel is the default.
 
 - **Live:** <https://wordvale-two.vercel.app> (public production URL)
-- **Repo:** <https://github.com/faeezmnoor/wordvale> (private)
+- **Repo:** <https://github.com/faeezmnoor/wordvale> (public, MIT)
 - **Dashboard:** <https://vercel.com/faeezmnoor/wordvale>
 
 First deployed 2026-08-12 with `vercel --prod`.

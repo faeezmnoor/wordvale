@@ -8,7 +8,7 @@
 - **Open owner gates:** none blocking. Next: Iteration-2 planning (economy: score, coins,
   escalating letter reveals, slot machine + the parked difficulty brainstorm).
 - **Deployment:** LIVE at <https://wordvale-two.vercel.app> · repo `faeezmnoor/wordvale`
-  (private) · see [deploy.md](deploy.md). Redeploy = `npx vercel --prod` (no auto-deploy on
+  (**public**, MIT-licensed) · see [deploy.md](deploy.md). Redeploy = `npx vercel --prod` (no auto-deploy on
   push yet).
 - **Owner feedback routed:** see [iterations/01-core-loop/00-owner-feedback.md](iterations/01-core-loop/00-owner-feedback.md)
 
