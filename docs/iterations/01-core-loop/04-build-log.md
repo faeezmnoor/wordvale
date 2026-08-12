@@ -49,3 +49,18 @@ validate.ts internal dedup (test-only). Dev-tool design-system exemption added t
 
 **G-accept (async):** try `bun run dev` → `http://localhost:5173/?harness` — type any word
 list, step seeds, watch grids. 14 tests green.
+
+## Slices b + c — create + review screens (2026-08-12)
+
+**Goal:** paste words → live validation → generate (worker, 2s budget) → review/confirm.
+**Shipped:** zustand store (`state/store.ts`), gen worker + `useGenerate` hook, `TopBar`/
+`Sprites` (pixel SVG set: coin, chevron, pencil, gift, camera, mic, sprouts, hourglass),
+Create screen (chips per precheck reason incl. isolates-warn, partial-failure "drop & play",
+total-failure sprite state, tooFew/tooMany messaging), Review screen (shared `FittedGrid`
+fit-to-panel renderer, quality-phrase meta with tap legend, regenerate seed+1 keeping ≥
+placement count, edit-words round trip preserving text), Home first-run hero (sun + meadow +
+mascot). Smoke-tested in browser: full flow, regenerate, edit round-trip — no console errors.
+**Deviation:** slice-b/c AI review runs as one focused pass (files land together; per-slice
+full 8-angle review reserved for slice d/f per momentum ruling).
+**G-accept:** `bun run dev` → Create your first crossword → paste any list (try including
+"kuih lapis" and a lone "xyz" to see the chips) → Generate → Review → Regenerate.
