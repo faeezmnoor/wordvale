@@ -2,14 +2,13 @@
 
 > Resume point for any session. Update after every stage transition and every gate.
 
-- **Current iteration:** 00-foundations (light cycle)
-- **Current stage:** complete pending owner gate
-- **Open AI gates:** none — all Iteration-0 AI gates passed
-- **Open owner gates:** **Iteration-0 approval** — Faeez reviews the summary + runs
-  `bun run dev` and views the play-screen preview on his own device at native DPR
-  (bar in [gates.md](gates.md) → Design-approval bar)
-- **Next up after approval:** Iteration 1 (core loop) Stage 1 planning
-- **Timebox:** Iteration-0 close-out within 5 working days of 2026-08-12
+- **Current iteration:** 01-core-loop (full cycle)
+- **Current stage:** Stage 1 — Planning
+- **Open AI gates:** `/council-review` (full) on `docs/iterations/01-core-loop/01-plan.md`
+- **Open owner gates:** Stage-1 plan approval (after council); native-DPR device check of the
+  Iteration-0 preview is still owed by Faeez (approved on screenshots 2026-08-12 — if the device
+  check finds blur/legibility issues, treat as a design-system amendment, not a reopened gate)
+- **Owner feedback routed:** see [iterations/01-core-loop/00-owner-feedback.md](iterations/01-core-loop/00-owner-feedback.md)
 
 ## Gate log
 
@@ -19,4 +18,4 @@
 | 2026-08-12 | 00 | `/council-review --quick` on 01-plan-spec.md | PASS with amendments (ADR demoted, in-stack preview bar, gates.md, 5-day timebox) — findings recorded in the doc |
 | 2026-08-12 | 00 | Design system + in-stack preview | BUILT & self-checked: ~120fps stepped animations, zero console errors, all 7 words place correctly; native-DPR check awaits owner |
 | 2026-08-12 | 00 | ADR 001 DOM-vs-canvas | ACCEPTED: DOM behind `<Grid>`, reversal triggers recorded |
-| 2026-08-12 | 00 | Owner gate | **PENDING — Faeez** |
+| 2026-08-12 | 00 | Owner gate | **PASS — Faeez approved** with 4 comments (routed to 01-core-loop/00-owner-feedback.md); device DPR check still owed |
