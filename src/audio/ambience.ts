@@ -6,6 +6,7 @@ import { getSettings } from '../state/settings'
 let ctx: AudioContext | null = null
 let nodes: { gain: GainNode; stop: () => void } | null = null
 let gestureHooked = false
+let gestureSeen = false
 let wanted = false
 
 function build(c: AudioContext) {
@@ -70,6 +71,8 @@ function applyVolume() {
 
 function start() {
   if (typeof window === 'undefined') return
+  // hard rule: never touch AudioContext before a real user gesture (browser autoplay policy)
+  if (!gestureSeen) return
   try {
     if (!ctx) ctx = new AudioContext()
     if (ctx.state === 'suspended') void ctx.resume()
@@ -86,6 +89,7 @@ export function enableAmbience() {
   if (!gestureHooked) {
     gestureHooked = true
     const onGesture = () => {
+      gestureSeen = true
       start()
       window.removeEventListener('pointerdown', onGesture)
       window.removeEventListener('keydown', onGesture)

@@ -5,10 +5,21 @@ import { getSettings } from '../state/settings'
 
 let ctx: AudioContext | null = null
 let active = 0
+let gestureSeen = false
 const MAX_CONCURRENT = 3
 
+if (typeof window !== 'undefined') {
+  const mark = () => {
+    gestureSeen = true
+    window.removeEventListener('pointerdown', mark)
+    window.removeEventListener('keydown', mark)
+  }
+  window.addEventListener('pointerdown', mark)
+  window.addEventListener('keydown', mark)
+}
+
 function ensureCtx(): AudioContext | null {
-  if (typeof window === 'undefined') return null
+  if (typeof window === 'undefined' || !gestureSeen) return null
   try {
     if (!ctx) ctx = new AudioContext()
     if (ctx.state === 'suspended') void ctx.resume()
