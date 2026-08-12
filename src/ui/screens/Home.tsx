@@ -151,23 +151,46 @@ export default function Home() {
 
 function Thumb({ record }: { record: PuzzleRecord }) {
   const bounds = boundsOf(record.placements)
-  const filled = new Set<string>()
-  for (const p of record.placements) for (const c of cellsOf(p)) filled.add(`${c.r},${c.c}`)
+  if (bounds.rows === 0 || bounds.cols === 0) return null
+
   const solvedCells = new Set<string>()
   for (const p of record.placements)
     if (record.solvedWords.includes(p.word)) for (const c of cellsOf(p)) solvedCells.add(`${c.r},${c.c}`)
-  const size = Math.max(6, Math.min(14, Math.floor(140 / Math.max(bounds.rows, bounds.cols))))
+
+  const cells: { r: number; c: number; solved: boolean }[] = []
+  const seen = new Set<string>()
+  for (const p of record.placements)
+    for (const c of cellsOf(p)) {
+      const key = `${c.r},${c.c}`
+      if (seen.has(key)) continue
+      seen.add(key)
+      cells.push({ r: c.r, c: c.c, solved: solvedCells.has(key) })
+    }
+
+  // An SVG viewBox scales to whatever box it's given, so a 25-column puzzle and a 5-column
+  // one both fit the card exactly — no per-grid pixel maths, no overflow.
   return (
-    <div
-      className="thumb"
-      style={{ gridTemplateColumns: `repeat(${bounds.cols}, ${size}px)`, gridTemplateRows: `repeat(${bounds.rows}, ${size}px)` }}
+    <svg
+      viewBox={`0 0 ${bounds.cols} ${bounds.rows}`}
+      preserveAspectRatio="xMidYMid meet"
+      width="100%"
+      height="100%"
+      style={{ display: 'block', imageRendering: 'pixelated' }}
+      aria-hidden
     >
-      {Array.from({ length: bounds.rows * bounds.cols }, (_, i) => {
-        const key = `${Math.floor(i / bounds.cols)},${i % bounds.cols}`
-        if (!filled.has(key)) return <i key={key} className="void" />
-        return <i key={key} className={solvedCells.has(key) ? 'on' : ''} />
-      })}
-    </div>
+      {cells.map(({ r, c, solved }) => (
+        <rect
+          key={`${r},${c}`}
+          x={c + 0.06}
+          y={r + 0.06}
+          width={0.88}
+          height={0.88}
+          fill={solved ? 'var(--meadow)' : 'var(--parchment-hi)'}
+          stroke={solved ? 'var(--meadow-dark)' : 'var(--wood-dark)'}
+          strokeWidth={0.12}
+        />
+      ))}
+    </svg>
   )
 }
 

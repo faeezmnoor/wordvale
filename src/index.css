@@ -373,16 +373,17 @@ html, body { max-width: 100%; overflow-x: hidden; }
   border: none;
   padding: 0;
   cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  display: block;
+  width: 100%;
   height: 120px; /* fixed so cards in a row line up regardless of grid shape */
+  overflow: hidden; /* belt-and-braces: nothing escapes the card */
+  min-width: 0;
 }
-.card h3 { margin-top: auto; }
-.thumb { display: grid; gap: 2px; justify-content: center; padding: 10px 0; }
-.thumb i { display: block; width: 100%; height: 100%; border: 1px solid var(--wood-dark); background: var(--parchment-hi); }
-.thumb i.on { background: var(--meadow); border-color: var(--meadow-dark); }
-.thumb i.void { border: none; background: none; }
+.card { overflow: hidden; }
+.card h3 {
+  margin-top: auto;
+  overflow-wrap: anywhere; /* long pasted titles must wrap, not spill */
+}
 .statuschip { font-family: var(--font-grid); font-size: 0.75rem; padding: 2px 8px; border: 2px solid; white-space: nowrap; }
 .statuschip.progress { color: var(--sky); border-color: var(--sky); }
 .statuschip.solved { color: var(--gold-dark); border-color: var(--gold); background: rgba(232, 179, 60, 0.15); }
