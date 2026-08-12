@@ -26,8 +26,10 @@ export default function Play() {
   const puzzleId = useRef<string | null>(null)
   if (puzzleId.current === null) puzzleId.current = draft?.id ?? newPuzzleId(Date.now(), Math.random())
   const createdAt = useRef(Date.now())
-  // don't write until the player actually changes something — protects a resumed record
-  const dirty = useRef(false)
+  // A brand-new puzzle is saved as soon as it's opened, so it lands in the library even if
+  // the player just looks at it. A RESUMED record is only rewritten once something changes,
+  // so opening it can never wipe saved progress.
+  const dirty = useRef(!draft?.id)
   const [flash, setFlash] = useState<{ kind: string; cells: string[]; id: number } | null>(null)
   const flashId = useRef(0)
   const sessionCoins = useRef(0)
