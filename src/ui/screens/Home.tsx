@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useApp } from '../../state/store'
 import { deletePuzzle, listPuzzles, type PuzzleRecord } from '../../state/db'
-import { disableAmbience, enableAmbience } from '../../audio/ambience'
 import { boundsOf, cellsOf } from '../../engine'
 import { TopBar } from '../components/TopBar'
 import { SproutSprite } from '../components/Sprites'
@@ -16,8 +15,6 @@ export default function Home() {
     void listPuzzles()
       .then(setPuzzles)
       .catch(() => setPuzzles([])) // storage-less browser still gets the first-run hero
-    enableAmbience()
-    return () => disableAmbience()
   }, [])
 
   const resume = (p: PuzzleRecord) => {
@@ -66,7 +63,9 @@ export default function Home() {
               <rect x="7" y="3" width="1" height="2" fill="#e8b33c" />
             </svg>
           </span>
-          <SproutSprite size={96} />
+          <span className="sprout">
+          <SproutSprite size={112} />
+        </span>
           <h2>Turn any words into a cozy crossword</h2>
           <p>Paste a list or pick a theme — WordVale weaves them into a puzzle you can play anywhere.</p>
           <button

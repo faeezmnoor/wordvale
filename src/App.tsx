@@ -1,5 +1,6 @@
-import { lazy, Suspense } from 'react'
+import { lazy, Suspense, useEffect } from 'react'
 import { useApp } from './state/store'
+import { startAmbience } from './audio/ambience'
 import Home from './ui/screens/Home'
 import Create from './ui/screens/Create'
 import Review from './ui/screens/Review'
@@ -14,6 +15,11 @@ const showHarness =
 
 export default function App() {
   const screen = useApp((s) => s.screen)
+
+  // one cozy bed for the whole app; it waits for the first tap before making a sound
+  useEffect(() => {
+    startAmbience()
+  }, [])
 
   if (showHarness) {
     return (

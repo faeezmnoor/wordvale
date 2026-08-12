@@ -229,9 +229,31 @@ h3 {
 }
 .hourglass { display: inline-flex; animation: hourglass-flip 1.6s steps(4, end) infinite; }
 
-.hero { text-align: center; padding: 40px 24px 72px; overflow: hidden; }
-.hero h2 { font-size: 2.5rem; margin: 16px 0 8px; }
-.hero p { color: var(--ink-soft); max-width: 420px; margin: 0 auto 24px; }
+/* First run: the hero owns the screen instead of hugging the top of a mostly empty page */
+.hero {
+  text-align: center;
+  padding: clamp(32px, 6vh, 72px) 24px calc(clamp(32px, 6vh, 72px) + 40px);
+  overflow: hidden;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+.hero h2 {
+  font-size: clamp(1.9rem, 5vw, 3rem);
+  margin: 20px 0 10px;
+  max-width: 20ch; /* the line breaks where it reads best, not where the window ends */
+  line-height: 1.15;
+}
+.hero p {
+  color: var(--ink-soft);
+  max-width: 44ch;
+  font-size: clamp(1rem, 1.6vw, 1.15rem);
+  margin: 0 auto 28px;
+}
+.hero .sprout { width: clamp(72px, 12vh, 128px); height: auto; }
 .sun { position: absolute; top: 18px; right: 26px; }
 .meadow { position: absolute; bottom: -3px; left: -3px; right: -3px; }
 

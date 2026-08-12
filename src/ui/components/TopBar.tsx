@@ -1,6 +1,7 @@
 import { useApp } from '../../state/store'
 import { ChevronSprite, CoinSprite, SoundSprite } from './Sprites'
-import { refreshAmbienceVolume } from '../../audio/ambience'
+import { refreshAmbienceVolume, startAmbience } from '../../audio/ambience'
+import * as sfx from '../../audio/sfx'
 
 export function TopBar({ title, back }: { title?: string; back?: boolean }) {
   const coins = useApp((s) => s.coins)
@@ -36,7 +37,9 @@ export function TopBar({ title, back }: { title?: string; back?: boolean }) {
         <button
           onClick={() => {
             toggleSound()
+            startAmbience() // the first gesture may well be this very button
             refreshAmbienceVolume()
+            sfx.ding() // audible confirmation that sound is now on
           }}
           aria-label={sound ? 'Mute sound' : 'Unmute sound'}
           title={sound ? 'Mute sound' : 'Unmute sound'}
