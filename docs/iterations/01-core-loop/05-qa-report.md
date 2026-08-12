@@ -41,6 +41,15 @@ automated suite. **Result: all acceptance criteria met; no console errors on any
    Fixed with a hard gesture gate in both `sfx.ts` and `ambience.ts`.
 6. **Library cards had unequal heights** (minor, spec): fixed with stretch + fixed thumb box.
 
+## Post-QA review round (final `/review` on slices d–f)
+
+A final review pass found **3 blockers + 5 majors** after the QA above; all are fixed and
+re-verified (details in [04-build-log.md](04-build-log.md)). The two that mattered most:
+replaying a solved puzzle used to destroy its record and re-mint coins (an unlimited coin farm
+for Iteration 2's economy), and the on-screen keyboard overlay swallowed every tap on touch
+devices, which would have made the mobile experience feel broken. Browser-verified after fixing:
+solved card stays SOLVED after a replay-open, wallet unchanged, no duplicate cards.
+
 ## Deferred (recorded, not blocking)
 
 - Worker time-budget determinism: `maxMs` makes candidate count clock-dependent. Not user-visible
@@ -48,6 +57,10 @@ automated suite. **Result: all acceptance criteria met; no console errors on any
 - Accessibility pass (screen-reader grid semantics, colour-blind audit beyond the solved-lock
   redundancy) — carried to Iteration 2 as agreed at Stage 1.
 - OCR + voice input tabs are visible but disabled ("soon") — Iterations 3 and 4.
+- Per-tile 40ms solve-cascade stagger and the coin-flight-to-wallet arc are specified but not
+  implemented (solves pop as one; coins increment directly) — small polish, carried forward.
+- `tests/e2e/` is still empty: end-to-end coverage was performed by driven-browser QA rather
+  than committed Playwright specs. Worth adding before Iteration 2 builds on this loop.
 
 ## Evidence
 

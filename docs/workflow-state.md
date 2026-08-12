@@ -3,10 +3,10 @@
 > Resume point for any session. Update after every stage transition and every gate.
 
 - **Current iteration:** 01-core-loop (full cycle)
-- **Current stage:** Stage 4 — Development (build authorized 2026-08-12)
-- **Open AI gates:** per-slice (check green, /review, /qa-only smoke)
-- **Open owner gates:** async G-accepts per slice (gate SHIP, not progress); next blocking
-  owner gate is Stage-5 SHIP.
+- **Current stage:** Stage 5 complete pending owner SHIP gate
+- **Open AI gates:** none — all slices reviewed, QA green (see 05-qa-report.md)
+- **Open owner gates:** **SHIP** — Faeez plays the app (`bun run dev`) and approves, or lists
+  changes. Iteration-2 planning (economy) starts after.
 - **Owner feedback routed:** see [iterations/01-core-loop/00-owner-feedback.md](iterations/01-core-loop/00-owner-feedback.md)
 
 ## Gate log
@@ -25,3 +25,7 @@
 | 2026-08-12 | 01 | Owner gate (Stage-2 design) | **PASS — approved** + sound directive (SFX + home ambience → I1 scope; design spec §Sound); council-sizing amendment default-approved → gates.md |
 | 2026-08-12 | 01 | Quick council on 03-tech-spec.md | **PASS with amendments** (applied): backtracking pseudocode + forced fixture, canonical fill model, Tab/Backspace semantics, self-play rubric, slice-b fixtures. DA skipped — no decision tension (recorded) |
 | 2026-08-12 | 01 | Owner gate (Stage-3 build authorization) | **PASS — "Proceed with build"** |
+| 2026-08-12 | 01 | Slices a–f built | ALL SHIPPED — 27 tests green, `bun run build` clean |
+| 2026-08-12 | 01 | `/review` on slices a / b+c / d–f | PASS after fixes (8-angle, focused, and final passes; 1+5+8 findings fixed) |
+| 2026-08-12 | 01 | Stage-5 QA (browser, all criteria + failure paths + 360/768/1280) | **PASS** — 6 QA bugs found & fixed; grid fills 92–93%; no console errors |
+| 2026-08-12 | 01 | Owner gate (SHIP) | **PENDING — Faeez** |
