@@ -11,13 +11,17 @@ First deployed 2026-08-12 with `vercel --prod`.
 
 ## Redeploying
 
+**Pushing to `main` deploys automatically.** The Vercel project is connected to the GitHub
+repo, so a push builds and promotes to production on its own (verified 2026-08-12 with an
+empty commit: a new production deployment appeared ~45s later). Pull requests get their own
+preview URLs.
+
+To deploy the working tree without committing:
+
 ```bash
 cd ~/dev/projects/wordvale
-npx vercel --prod        # deploys the current working tree
+npx vercel --prod
 ```
-
-To get **automatic deploys on every push** instead, connect the GitHub repo in the Vercel
-dashboard (Project → Settings → Git). Until then, pushing to GitHub does *not* redeploy.
 
 ## URL notes (worth knowing)
 
