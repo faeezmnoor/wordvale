@@ -295,3 +295,26 @@ h3 {
 .theme h3 { font-size: 1rem; margin: 6px 0 2px; }
 .theme .size { font-family: var(--font-grid); font-size: 0.75rem; color: var(--ink-soft); }
 .theme:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0 rgba(91, 58, 36, 0.25); }
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+  align-items: start;
+}
+@media (min-width: 700px) {
+  .cards { grid-template-columns: repeat(auto-fill, 260px); justify-content: start; }
+}
+.card { padding: 14px; display: flex; flex-direction: column; gap: 8px; }
+.card h3 { font-size: 1.05rem; }
+.cardmeta { color: var(--ink-soft); font-size: 0.82rem; display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.thumbbtn { background: none; border: none; padding: 0; cursor: pointer; display: flex; justify-content: center; }
+.thumb { display: grid; gap: 2px; justify-content: center; padding: 10px 0; }
+.thumb i { display: block; width: 100%; height: 100%; border: 1px solid var(--wood-dark); background: var(--parchment-hi); }
+.thumb i.on { background: var(--meadow); border-color: var(--meadow-dark); }
+.thumb i.void { border: none; background: none; }
+.statuschip { font-family: var(--font-grid); font-size: 0.75rem; padding: 2px 8px; border: 2px solid; white-space: nowrap; }
+.statuschip.progress { color: var(--sky); border-color: var(--sky); }
+.statuschip.solved { color: var(--gold-dark); border-color: var(--gold); background: rgba(232, 179, 60, 0.15); }
+.btn.danger { background: var(--berry); border-color: var(--berry-dark); }
+.meadow-foot { margin-top: auto; padding-top: 24px; }

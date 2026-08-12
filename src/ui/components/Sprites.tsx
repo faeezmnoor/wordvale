@@ -217,3 +217,24 @@ export function CheckSprite({ size = 16 }: { size?: number }) {
     />
   )
 }
+
+export function SoundSprite({ on, size = 18 }: { on: boolean; size?: number }) {
+  const speaker: [number, number, number, number, string][] = [
+    [1, 3, 2, 2, '#faf1dc'],
+    [3, 2, 2, 4, '#faf1dc'],
+  ]
+  const waves: [number, number, number, number, string][] = on
+    ? [
+        [6, 3, 1, 2, '#faf1dc'],
+        [7, 2, 1, 4, '#faf1dc'],
+      ]
+    : [
+        [6, 2, 1, 1, '#c24b3f'],
+        [6, 5, 1, 1, '#c24b3f'],
+        [5, 3, 1, 1, '#c24b3f'],
+        [7, 3, 1, 1, '#c24b3f'],
+        [5, 4, 1, 1, '#c24b3f'],
+        [7, 4, 1, 1, '#c24b3f'],
+      ]
+  return <Px size={size} rects={[...speaker, ...waves]} />
+}

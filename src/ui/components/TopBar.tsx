@@ -1,9 +1,12 @@
 import { useApp } from '../../state/store'
-import { ChevronSprite, CoinSprite } from './Sprites'
+import { ChevronSprite, CoinSprite, SoundSprite } from './Sprites'
+import { refreshAmbienceVolume } from '../../audio/ambience'
 
 export function TopBar({ title, back }: { title?: string; back?: boolean }) {
   const coins = useApp((s) => s.coins)
   const go = useApp((s) => s.go)
+  const sound = useApp((s) => s.sound)
+  const toggleSound = useApp((s) => s.toggleSound)
   return (
     <header
       className="panel"
@@ -29,17 +32,30 @@ export function TopBar({ title, back }: { title?: string; back?: boolean }) {
         )}
         {title ?? 'WordVale'}
       </h1>
-      <div
-        style={{
-          fontFamily: 'var(--font-grid)',
-          fontSize: '1.05rem',
-          color: 'var(--gold)',
-          display: 'flex',
-          alignItems: 'center',
-          gap: 8,
-        }}
-      >
-        <CoinSprite /> {coins}
+      <div style={{ display: 'flex', alignItems: 'center', gap: 18 }}>
+        <button
+          onClick={() => {
+            toggleSound()
+            refreshAmbienceVolume()
+          }}
+          aria-label={sound ? 'Mute sound' : 'Unmute sound'}
+          title={sound ? 'Mute sound' : 'Unmute sound'}
+          style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 4, display: 'flex' }}
+        >
+          <SoundSprite on={sound} />
+        </button>
+        <div
+          style={{
+            fontFamily: 'var(--font-grid)',
+            fontSize: '1.05rem',
+            color: 'var(--gold)',
+            display: 'flex',
+            alignItems: 'center',
+            gap: 8,
+          }}
+        >
+          <CoinSprite /> {coins}
+        </div>
       </div>
     </header>
   )

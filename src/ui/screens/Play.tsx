@@ -1,8 +1,9 @@
-import { useCallback, useEffect, useMemo, useReducer, useState } from 'react'
+import { useCallback, useEffect, useMemo, useReducer, useRef, useState } from 'react'
 import { boundsOf, cellsOf } from '../../engine'
 import { useApp } from '../../state/store'
 import { COINS_PER_WORD, SCORE_COMPLETE_BONUS, SCORE_PER_LETTER } from '../../state/economy'
 import { compatibleSlots, initPlay, playReducer } from '../playMachine'
+import { newPuzzleId, savePuzzle } from '../../state/db'
 import { FittedGrid } from '../components/FittedGrid'
 import { TopBar } from '../components/TopBar'
 import { PixelKeyboard } from '../components/PixelKeyboard'
@@ -18,9 +19,12 @@ export default function Play() {
 
   const [state, dispatch] = useReducer(
     playReducer,
-    draft?.result.placements ?? [],
-    (placements) => initPlay(placements),
+    draft,
+    (d) => initPlay(d?.result.placements ?? [], d?.fill ?? {}, d?.solvedWords ?? []),
   )
+  // stable id for this play session — resumed puzzles keep theirs, new ones get one now
+  const puzzleId = useRef(draft?.id ?? newPuzzleId(Date.now(), Math.random()))
+  const createdAt = useRef(Date.now())
   const [flash, setFlash] = useState<{ kind: string; cells: string[] } | null>(null)
   const [celebrating, setCelebrating] = useState(false)
 
@@ -57,6 +61,32 @@ export default function Play() {
   useEffect(() => {
     if (!draft) go('home')
   }, [draft, go])
+
+  // debounced autosave (tech spec: 500ms during play + on visibilitychange)
+  useEffect(() => {
+    if (!draft) return
+    const write = () =>
+      void savePuzzle({
+        id: puzzleId.current,
+        title: draft.title,
+        words: draft.words,
+        seed: draft.result.seed,
+        placements: draft.result.placements,
+        fill: state.fill,
+        solvedWords: state.solved,
+        status: 'in-progress', // recomputed inside savePuzzle
+        coinsEarned: state.solved.length * COINS_PER_WORD,
+        createdAt: createdAt.current,
+        updatedAt: Date.now(),
+      })
+    const t = setTimeout(write, 500)
+    const onHide = () => document.hidden && write()
+    document.addEventListener('visibilitychange', onHide)
+    return () => {
+      clearTimeout(t)
+      document.removeEventListener('visibilitychange', onHide)
+    }
+  }, [draft, state.fill, state.solved])
 
   // physical keyboard
   useEffect(() => {
