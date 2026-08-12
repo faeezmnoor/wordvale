@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>WordVale mockup — Play</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Pixelify+Sans:wght@400;600;700&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="mock-shared.css" />
+<style>
+  .playwrap { display: flex; gap: 16px; flex-wrap: wrap; align-items: stretch; }
+  .caret { display:inline-block; width: 14px; border-bottom: 4px solid var(--gold); }
+  .phone {
+    width: 390px; border: 6px solid var(--wood-dark); box-shadow: 6px 6px 0 rgba(91,58,36,.3);
+    margin: 0 auto; background: var(--parchment); overflow: hidden;
+  }
+  .overlay {
+    position: relative; background: rgba(59,42,30,.55); padding: 40px 20px; text-align: center;
+  }
+  .confetti { position:absolute; width: 10px; height: 10px; image-rendering: pixelated; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <span class="mocknote">PLAY · DESKTOP ≥900PX — FOCUSED WORD (SKY), FOCUSED CELL (GOLD CARET), SOLVED WORD (MEADOW)</span>
+  <header class="topbar"><h1 style="font-size:1.6rem"><svg width="14" height="14" viewBox="0 0 8 8" style="image-rendering:pixelated" aria-hidden><rect x="4" y="0" width="2" height="2" fill="#faf1dc"/><rect x="2" y="2" width="2" height="2" fill="#faf1dc"/><rect x="0" y="3" width="2" height="2" fill="#faf1dc"/><rect x="2" y="4" width="2" height="2" fill="#faf1dc"/><rect x="4" y="6" width="2" height="2" fill="#faf1dc"/></svg> &nbsp;Farm words</h1>
+    <div style="display:flex; gap:18px; align-items:center;">
+      <svg width="18" height="18" viewBox="0 0 8 8" style="image-rendering:pixelated"><rect x="1" y="3" width="2" height="2" fill="#faf1dc"/><rect x="3" y="2" width="2" height="4" fill="#faf1dc"/><rect x="6" y="2" width="1" height="1" fill="#c24b3f"/><rect x="6" y="5" width="1" height="1" fill="#c24b3f"/><rect x="5" y="3" width="1" height="1" fill="#c24b3f"/><rect x="7" y="3" width="1" height="1" fill="#c24b3f"/><rect x="5" y="4" width="1" height="1" fill="#c24b3f"/><rect x="7" y="4" width="1" height="1" fill="#c24b3f"/></svg>
+      <div class="coins"><svg width="16" height="16" viewBox="0 0 8 8" style="image-rendering:pixelated"><rect x="2" y="0" width="4" height="1" fill="#e8b33c"/><rect x="1" y="1" width="6" height="1" fill="#e8b33c"/><rect x="0" y="2" width="8" height="4" fill="#e8b33c"/><rect x="1" y="6" width="6" height="1" fill="#c9922a"/><rect x="2" y="7" width="4" height="1" fill="#c9922a"/><rect x="2" y="2" width="1" height="3" fill="#faf1dc"/></svg> 140</div>
+    </div></header>
+
+  <div class="playwrap">
+    <section class="panel" style="flex:1 1 480px; display:flex; align-items:center; justify-content:center; min-height: 460px;">
+      <svg class="flora tl" viewBox="0 0 14 14" width="28" height="28"><rect x="1" y="9" width="2" height="4" fill="#3f7a2e"/><rect x="3" y="6" width="2" height="2" fill="#5fa344"/><rect x="0" y="6" width="2" height="2" fill="#5fa344"/><rect x="6" y="8" width="2" height="2" fill="#e8b33c"/></svg>
+      <div class="grid" style="grid-template-columns: repeat(8, 64px); grid-auto-rows: 64px; font-size: 30px;">
+        <i></i><i></i><i class="cell"></i><i></i><i></i><i></i><i class="cell"></i><i></i>
+        <i></i><i></i><i class="cell"></i><i></i><i></i><i></i><i class="cell"></i><i></i>
+        <i class="cell solved" style="position:relative"><span style="position:absolute; top:2px; left:2px"><svg width="12" height="12" viewBox="0 0 8 8" style="image-rendering:pixelated" aria-hidden><rect x="2" y="0" width="4" height="1" fill="#c9922a"/><rect x="1" y="1" width="1" height="2" fill="#c9922a"/><rect x="6" y="1" width="1" height="2" fill="#c9922a"/><rect x="1" y="3" width="6" height="4" fill="#e8b33c"/><rect x="3" y="4" width="2" height="2" fill="#8a5a38"/></svg></span>H</i><i class="cell solved">A</i><i class="cell solved">R</i><i class="cell solved">V</i><i class="cell solved">E</i><i class="cell solved">S</i><i class="cell solved">T</i><i></i>
+        <i></i><i class="cell focusword typed">A</i><i></i><i class="cell"></i><i></i><i class="cell"></i><i></i><i></i>
+        <i></i><i class="cell focusword typed">P</i><i></i><i class="cell"></i><i></i><i class="cell"></i><i></i><i></i>
+        <i></i><i class="cell focused"><span class="caret">&nbsp;</span></i><i></i><i class="cell"></i><i class="cell"></i><i class="cell"></i><i class="cell"></i><i class="cell"></i>
+        <i></i><i class="cell focusword"></i><i></i><i></i><i></i><i></i><i></i><i></i>
+      </div>
+    </section>
+
+    <aside class="panel" style="flex: 0 1 280px; display:flex; flex-direction:column; gap:14px;">
+      <div style="display:flex; align-items:center; justify-content:space-between;">
+        <h2 style="font-size:1.1rem;">Words <span style="font-family:var(--font-grid); font-size:.8rem; color:var(--ink-soft)">1/7</span></h2>
+        <!-- progress sprout: stage 1 of 4 -->
+        <svg width="40" height="40" viewBox="0 0 16 16" style="image-rendering:pixelated" aria-hidden>
+          <rect x="6" y="10" width="4" height="4" fill="#8a5a38"/><rect x="5" y="13" width="6" height="2" fill="#5b3a24"/>
+          <rect x="7" y="8" width="2" height="2" fill="#5fa344"/>
+        </svg>
+      </div>
+      <div style="display:flex; flex-wrap:wrap; gap:8px;">
+        <span class="chip placed">HARVEST</span>
+        <span class="chip" style="border-color: var(--sky); color: var(--sky);">APPLE ◂</span>
+        <span class="chip">VINE</span><span class="chip">SEED</span>
+        <span class="chip">FIR</span><span class="chip">OAT</span><span class="chip">ELDER</span>
+      </div>
+      <p style="color:var(--ink-soft); font-size:.82rem; margin:0;">Type into the grid, or tap a word then tap its slot. <b>Tab</b> hops to the next word.</p>
+      <button class="btn" style="margin-top:auto;">✔ Check word</button>
+    </aside>
+  </div>
+
+  <span class="mocknote">PLAY · MOBILE &lt;900PX — ON-SCREEN PIXEL KEYBOARD — SUMMONED ON CELL FOCUS, OVERLAYS BOTTOM (NO DRAG ANYWHERE)</span>
+  <div class="phone">
+    <header class="topbar" style="margin-bottom:8px;"><h1 style="font-size:1.2rem"><svg width="12" height="12" viewBox="0 0 8 8" style="image-rendering:pixelated" aria-hidden><rect x="4" y="0" width="2" height="2" fill="#faf1dc"/><rect x="2" y="2" width="2" height="2" fill="#faf1dc"/><rect x="0" y="3" width="2" height="2" fill="#faf1dc"/><rect x="2" y="4" width="2" height="2" fill="#faf1dc"/><rect x="4" y="6" width="2" height="2" fill="#faf1dc"/></svg> Farm words</h1><div class="coins" style="font-size:.85rem;"><svg width="16" height="16" viewBox="0 0 8 8" style="image-rendering:pixelated"><rect x="2" y="0" width="4" height="1" fill="#e8b33c"/><rect x="1" y="1" width="6" height="1" fill="#e8b33c"/><rect x="0" y="2" width="8" height="4" fill="#e8b33c"/><rect x="1" y="6" width="6" height="1" fill="#c9922a"/><rect x="2" y="7" width="4" height="1" fill="#c9922a"/><rect x="2" y="2" width="1" height="3" fill="#faf1dc"/></svg> 140</div></header>
+    <div style="padding: 0 10px;">
+      <div class="grid" style="grid-template-columns: repeat(8, 40px); grid-auto-rows: 40px; font-size: 19px; justify-content:center;">
+        <i></i><i></i><i class="cell"></i><i></i><i></i><i></i><i class="cell"></i><i></i>
+        <i></i><i></i><i class="cell"></i><i></i><i></i><i></i><i class="cell"></i><i></i>
+        <i class="cell solved" style="position:relative"><span style="position:absolute; top:2px; left:2px"><svg width="12" height="12" viewBox="0 0 8 8" style="image-rendering:pixelated" aria-hidden><rect x="2" y="0" width="4" height="1" fill="#c9922a"/><rect x="1" y="1" width="1" height="2" fill="#c9922a"/><rect x="6" y="1" width="1" height="2" fill="#c9922a"/><rect x="1" y="3" width="6" height="4" fill="#e8b33c"/><rect x="3" y="4" width="2" height="2" fill="#8a5a38"/></svg></span>H</i><i class="cell solved">A</i><i class="cell solved">R</i><i class="cell solved">V</i><i class="cell solved">E</i><i class="cell solved">S</i><i class="cell solved">T</i><i></i>
+        <i></i><i class="cell focusword typed">A</i><i></i><i class="cell"></i><i></i><i class="cell"></i><i></i><i></i>
+        <i></i><i class="cell focused"><span class="caret">&nbsp;</span></i><i></i><i class="cell"></i><i></i><i class="cell"></i><i></i><i></i>
+      </div>
+      <div style="display:flex; gap:6px; flex-wrap:wrap; padding:10px 4px;">
+        <span class="chip placed" style="font-size:.75rem;">HARVEST</span>
+        <span class="chip" style="font-size:.75rem; border-color:var(--sky); color:var(--sky);">APPLE ◂</span>
+        <span class="chip" style="font-size:.75rem;">VINE</span><span class="chip" style="font-size:.75rem;">SEED</span>
+        <span class="chip" style="font-size:.75rem;">FIR</span><span class="chip" style="font-size:.75rem;">OAT</span><span class="chip" style="font-size:.75rem;">ELDER</span>
+      </div>
+    </div>
+    <div class="kb" style="background: var(--wood); border-top: 3px solid var(--wood-dark); padding: 10px 6px;">
+      <div class="kbrow"><span class="key">Q</span><span class="key">W</span><span class="key">E</span><span class="key">R</span><span class="key">T</span><span class="key">Y</span><span class="key">U</span><span class="key">I</span><span class="key">O</span><span class="key">P</span></div>
+      <div class="kbrow"><span class="key">A</span><span class="key">S</span><span class="key">D</span><span class="key">F</span><span class="key">G</span><span class="key">H</span><span class="key">J</span><span class="key">K</span><span class="key">L</span></div>
+      <div class="kbrow"><span class="key action">✔</span><span class="key">Z</span><span class="key">X</span><span class="key">C</span><span class="key">V</span><span class="key">B</span><span class="key">N</span><span class="key">M</span><span class="key">⌫</span></div>
+    </div>
+  </div>
+
+  <span class="mocknote">PLAY · COMPLETION CELEBRATION OVERLAY</span>
+  <div class="overlay">
+    <svg class="confetti" style="animation-delay:.5s; animation-delay:.15s; animation-delay:.6s; animation-delay:.35s; animation-delay:0s; top:18px; left:12%"  viewBox="0 0 2 2"><rect width="2" height="2" fill="#e8b33c"/></svg>
+    <svg class="confetti" style="top:44px; left:28%"  viewBox="0 0 2 2"><rect width="2" height="2" fill="#5fa344"/></svg>
+    <svg class="confetti" style="top:10px; left:52%"  viewBox="0 0 2 2"><rect width="2" height="2" fill="#c24b3f"/></svg>
+    <svg class="confetti" style="top:60px; left:66%"  viewBox="0 0 2 2"><rect width="2" height="2" fill="#5a9bd8"/></svg>
+    <svg class="confetti" style="top:26px; left:84%"  viewBox="0 0 2 2"><rect width="2" height="2" fill="#e8b33c"/></svg>
+    <section class="panel" style="max-width: 420px; margin: 0 auto; text-align:center;">
+      <h2 style="font-size:1.8rem;">Puzzle complete! <svg width="22" height="22" viewBox="0 0 8 8" style="image-rendering:pixelated" aria-hidden><rect x="3" y="0" width="2" height="2" fill="#e8b33c"/><rect x="0" y="2" width="8" height="2" fill="#e8b33c"/><rect x="1" y="4" width="6" height="1" fill="#e8b33c"/><rect x="2" y="5" width="4" height="1" fill="#e8b33c"/><rect x="1" y="6" width="2" height="1" fill="#e8b33c"/><rect x="5" y="6" width="2" height="1" fill="#e8b33c"/><rect x="3" y="4" width="2" height="1" fill="#c9922a"/></svg></h2>
+      <!-- blooming sprout: stage 4 of 4 -->
+      <svg width="72" height="72" viewBox="0 0 16 16" style="image-rendering:pixelated; margin:10px 0;" aria-hidden>
+        <rect x="6" y="10" width="4" height="4" fill="#8a5a38"/><rect x="5" y="13" width="6" height="2" fill="#5b3a24"/>
+        <rect x="7" y="6" width="2" height="4" fill="#3f7a2e"/>
+        <rect x="4" y="4" width="3" height="3" fill="#5fa344"/><rect x="9" y="4" width="3" height="3" fill="#5fa344"/>
+        <rect x="5" y="1" width="6" height="4" fill="#e8b33c"/><rect x="7" y="2" width="2" height="2" fill="#c24b3f"/>
+        <rect x="7" y="11" width="1" height="1" fill="#3b2a1e"/><rect x="9" y="11" width="1" height="1" fill="#3b2a1e"/>
+      </svg>
+      <div style="font-family: var(--font-grid); font-size: 1rem; margin-bottom: 4px;">SCORE <span style="color:var(--meadow-dark)">720</span></div>
+      <div style="font-family: var(--font-grid); font-size: 1rem; color:#a97b12; margin-bottom: 16px;"><svg width="16" height="16" viewBox="0 0 8 8" style="image-rendering:pixelated"><rect x="2" y="0" width="4" height="1" fill="#e8b33c"/><rect x="1" y="1" width="6" height="1" fill="#e8b33c"/><rect x="0" y="2" width="8" height="4" fill="#e8b33c"/><rect x="1" y="6" width="6" height="1" fill="#c9922a"/><rect x="2" y="7" width="4" height="1" fill="#c9922a"/><rect x="2" y="2" width="1" height="3" fill="#faf1dc"/></svg> +35</div>
+      <div style="display:flex; gap:10px; justify-content:center;">
+        <button class="btn">Home</button>
+        <button class="btn secondary">⟳ Play again</button>
+      </div>
+    </section>
+  </div>
+
+</div>
+</body>
+</html>

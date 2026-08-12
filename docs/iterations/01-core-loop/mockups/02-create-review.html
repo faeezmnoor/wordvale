@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>WordVale mockup — Create &amp; Review</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Pixelify+Sans:wght@400;600;700&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="mock-shared.css" />
+<style>
+  .tabs { display: flex; gap: 0; margin-bottom: -3px; }
+  .tab {
+    font-family: var(--font-display); font-size: 1rem; padding: 8px 18px;
+    border: 3px solid var(--wood-dark); border-bottom: none; background: var(--parchment);
+    color: var(--ink-soft); cursor: pointer;
+  }
+  .tab.active { background: var(--parchment-hi); color: var(--ink); }
+  textarea {
+    width: 100%; min-height: 120px; resize: vertical; padding: 12px;
+    background: var(--parchment); border: 3px solid var(--wood-dark);
+    font-family: var(--font-body); font-size: 1rem; color: var(--ink);
+  }
+  .themes { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; }
+  .theme { padding: 14px; text-align: center; cursor: pointer; }
+  .theme .ico { font-size: 1.6rem; }
+  .theme h3 { font-size: 1rem; margin: 6px 0 2px; }
+  .theme .size { font-family: var(--font-grid); font-size: .75rem; color: var(--ink-soft); }
+  .resultbar { border-left: 6px solid var(--berry); }
+  .reviewwrap { display: flex; gap: 16px; flex-wrap: wrap; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <span class="mocknote">CREATE · "MY WORDS" TAB, WITH VALIDATION</span>
+  <header class="topbar"><h1 style="font-size:1.6rem"><svg width="14" height="14" viewBox="0 0 8 8" style="image-rendering:pixelated" aria-hidden><rect x="4" y="0" width="2" height="2" fill="#faf1dc"/><rect x="2" y="2" width="2" height="2" fill="#faf1dc"/><rect x="0" y="3" width="2" height="2" fill="#faf1dc"/><rect x="2" y="4" width="2" height="2" fill="#faf1dc"/><rect x="4" y="6" width="2" height="2" fill="#faf1dc"/></svg> &nbsp;New puzzle</h1>
+    <div class="coins"><svg width="16" height="16" viewBox="0 0 8 8" style="image-rendering:pixelated"><rect x="2" y="0" width="4" height="1" fill="#e8b33c"/><rect x="1" y="1" width="6" height="1" fill="#e8b33c"/><rect x="0" y="2" width="8" height="4" fill="#e8b33c"/><rect x="1" y="6" width="6" height="1" fill="#c9922a"/><rect x="2" y="7" width="4" height="1" fill="#c9922a"/><rect x="2" y="2" width="1" height="3" fill="#faf1dc"/></svg> 135</div></header>
+
+  <div class="tabs">
+    <div class="tab active"><svg width="16" height="16" viewBox="0 0 8 8" style="image-rendering:pixelated" aria-hidden><rect x="5" y="0" width="2" height="2" fill="#c24b3f"/><rect x="4" y="2" width="2" height="2" fill="#e8b33c"/><rect x="3" y="3" width="2" height="2" fill="#e8b33c"/><rect x="2" y="4" width="2" height="2" fill="#e8b33c"/><rect x="1" y="6" width="2" height="1" fill="#6b5744"/><rect x="1" y="5" width="1" height="2" fill="#6b5744"/></svg> My words</div>
+    <div class="tab"><svg width="16" height="16" viewBox="0 0 8 8" style="image-rendering:pixelated" aria-hidden><rect x="1" y="3" width="6" height="4" fill="#c24b3f"/><rect x="3" y="3" width="2" height="4" fill="#e8b33c"/><rect x="1" y="2" width="6" height="1" fill="#8f3428"/><rect x="2" y="0" width="1" height="2" fill="#3f7a2e"/><rect x="5" y="0" width="1" height="2" fill="#3f7a2e"/><rect x="3" y="1" width="2" height="2" fill="#e8b33c"/></svg> Surprise me</div>
+    <div class="tab" style="color:#a89478"><svg width="16" height="16" viewBox="0 0 8 8" style="image-rendering:pixelated" aria-hidden><rect x="1" y="2" width="6" height="4" fill="#6b5744"/><rect x="3" y="3" width="2" height="2" fill="#5a9bd8"/><rect x="2" y="1" width="2" height="1" fill="#6b5744"/><rect x="6" y="3" width="1" height="1" fill="#faf1dc"/></svg> <span style="font-size:.75rem">soon</span></div>
+    <div class="tab" style="color:#a89478"><svg width="16" height="16" viewBox="0 0 8 8" style="image-rendering:pixelated" aria-hidden><rect x="3" y="0" width="2" height="4" fill="#6b5744"/><rect x="2" y="1" width="1" height="2" fill="#6b5744"/><rect x="5" y="1" width="1" height="2" fill="#6b5744"/><rect x="3" y="5" width="2" height="1" fill="#8a5a38"/><rect x="2" y="6" width="4" height="1" fill="#8a5a38"/></svg> <span style="font-size:.75rem">soon</span></div>
+  </div>
+  <section class="panel">
+    <textarea>harvest
+apple
+vine
+ox
+apple
+kuih lapis</textarea>
+    <div style="display:flex; flex-wrap:wrap; gap:8px; margin:12px 0;">
+      <span class="chip">HARVEST</span>
+      <span class="chip">APPLE</span>
+      <span class="chip">VINE</span>
+      <span class="chip">OX</span>
+      <span class="chip bad">APPLE <span class="why">duplicate</span></span>
+      <span class="chip bad">KUIH LAPIS <span class="why">A–Z only, no spaces</span></span>
+    </div>
+    <div style="display:flex; justify-content:space-between; align-items:center;">
+      <span style="font-family:var(--font-grid); font-size:.8rem; color:var(--ink-soft)">WORDS: 4/20</span>
+      <button class="btn">Generate ➜</button>
+    </div>
+  </section>
+
+  <span class="mocknote">CREATE · PARTIAL-PLACEMENT FAILURE STATE</span>
+  <section class="panel resultbar">
+    <div style="display:flex; gap:16px; align-items:flex-start;">
+      <!-- sweating sprout -->
+      <svg width="64" height="64" viewBox="0 0 16 16" style="image-rendering:pixelated; flex:none" aria-hidden>
+        <rect x="6" y="10" width="4" height="4" fill="#8a5a38"/><rect x="5" y="13" width="6" height="2" fill="#5b3a24"/>
+        <rect x="7" y="7" width="2" height="3" fill="#3f7a2e"/>
+        <rect x="4" y="5" width="3" height="3" fill="#5fa344"/><rect x="9" y="5" width="3" height="3" fill="#5fa344"/>
+        <rect x="6" y="3" width="4" height="3" fill="#5fa344"/>
+        <rect x="7" y="11" width="1" height="1" fill="#3b2a1e"/><rect x="9" y="11" width="1" height="1" fill="#3b2a1e"/>
+        <rect x="12" y="6" width="1" height="2" fill="#5a9bd8"/><rect x="13" y="8" width="1" height="1" fill="#5a9bd8"/>
+      </svg>
+      <div>
+        <h2 style="font-size:1.2rem">We fit 9 of 11 words</h2>
+        <p style="color:var(--ink-soft); margin:6px 0 10px">These two don't share enough letters with the rest:</p>
+        <div style="display:flex; gap:8px; margin-bottom:14px;">
+          <span class="chip bad">XYLOPHONE</span><span class="chip bad">FJORD</span>
+        </div>
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+          <button class="btn">Drop &amp; play</button>
+          <button class="btn secondary">Try again</button>
+          <button class="btn ghost">Edit words</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <span class="mocknote">CREATE · "SURPRISE ME" TAB</span>
+  <section class="panel">
+    <div class="themes">
+      <div class="panel theme"><div class="ico"><svg width="28" height="28" viewBox="0 0 8 8" style="image-rendering:pixelated" aria-hidden><rect x="1" y="1" width="1" height="2" fill="#c96a2a"/><rect x="6" y="1" width="1" height="2" fill="#c96a2a"/><rect x="1" y="3" width="6" height="3" fill="#c96a2a"/><rect x="2" y="6" width="4" height="1" fill="#faf1dc"/><rect x="2" y="4" width="1" height="1" fill="#3b2a1e"/><rect x="5" y="4" width="1" height="1" fill="#3b2a1e"/><rect x="3" y="5" width="2" height="2" fill="#faf1dc"/></svg></div><h3>Animals</h3><div class="size">6–10 WORDS</div></div>
+      <div class="panel theme"><div class="ico"><svg width="28" height="28" viewBox="0 0 8 8" style="image-rendering:pixelated" aria-hidden><rect x="1" y="3" width="6" height="3" fill="#8a5a38"/><rect x="2" y="6" width="4" height="1" fill="#5b3a24"/><rect x="2" y="2" width="4" height="1" fill="#e8b33c"/><rect x="1" y="1" width="2" height="1" fill="#e8b33c"/><rect x="5" y="1" width="2" height="1" fill="#e8b33c"/></svg></div><h3>Food &amp; Cooking</h3><div class="size">8–12 WORDS</div></div>
+      <div class="panel theme"><div class="ico"><svg width="28" height="28" viewBox="0 0 8 8" style="image-rendering:pixelated" aria-hidden><rect x="3" y="1" width="2" height="6" fill="#faf1dc"/><rect x="1" y="3" width="6" height="2" fill="#5a9bd8"/><rect x="3" y="0" width="2" height="1" fill="#c24b3f"/><rect x="2" y="7" width="4" height="1" fill="#faf1dc"/></svg></div><h3>Travel</h3><div class="size">6–10 WORDS</div></div>
+      <div class="panel theme"><div class="ico"><svg width="28" height="28" viewBox="0 0 8 8" style="image-rendering:pixelated" aria-hidden><rect x="3" y="4" width="2" height="3" fill="#8a5a38"/><rect x="1" y="1" width="2" height="2" fill="#5fa344"/><rect x="5" y="1" width="2" height="2" fill="#5fa344"/><rect x="3" y="0" width="2" height="2" fill="#3f7a2e"/><rect x="1" y="7" width="6" height="1" fill="#e8b33c"/></svg></div><h3>Malaysia</h3><div class="size">8–12 WORDS</div></div>
+      <div class="panel theme"><div class="ico"><svg width="28" height="28" viewBox="0 0 8 8" style="image-rendering:pixelated" aria-hidden><rect x="1" y="2" width="6" height="4" fill="#3b2a1e"/><rect x="1" y="1" width="6" height="1" fill="#faf1dc"/><rect x="2" y="2" width="1" height="1" fill="#faf1dc"/><rect x="4" y="2" width="1" height="1" fill="#faf1dc"/><rect x="6" y="2" width="1" height="1" fill="#faf1dc"/></svg></div><h3>Movies &amp; TV</h3><div class="size">6–10 WORDS</div></div>
+      <div class="panel theme"><div class="ico"><svg width="28" height="28" viewBox="0 0 8 8" style="image-rendering:pixelated" aria-hidden><rect x="3" y="0" width="2" height="3" fill="#b9c7cf"/><rect x="2" y="3" width="4" height="3" fill="#5fa344"/><rect x="1" y="6" width="6" height="1" fill="#3f7a2e"/><rect x="2" y="1" width="1" height="1" fill="#faf1dc"/></svg></div><h3>Science</h3><div class="size">10–14 WORDS</div></div>
+      <div class="panel theme"><div class="ico"><svg width="28" height="28" viewBox="0 0 8 8" style="image-rendering:pixelated" aria-hidden><rect x="2" y="0" width="4" height="1" fill="#faf1dc"/><rect x="1" y="1" width="6" height="6" fill="#faf1dc"/><rect x="2" y="7" width="4" height="1" fill="#faf1dc"/><rect x="3" y="3" width="2" height="2" fill="#3b2a1e"/><rect x="1" y="1" width="1" height="1" fill="#3b2a1e"/><rect x="6" y="6" width="1" height="1" fill="#3b2a1e"/><rect x="6" y="1" width="1" height="1" fill="#3b2a1e"/><rect x="1" y="6" width="1" height="1" fill="#3b2a1e"/></svg></div><h3>Sports</h3><div class="size">6–10 WORDS</div></div>
+      <div class="panel theme"><div class="ico"><svg width="28" height="28" viewBox="0 0 8 8" style="image-rendering:pixelated" aria-hidden><rect x="1" y="2" width="5" height="4" fill="#3f7a2e"/><rect x="6" y="3" width="2" height="2" fill="#3f7a2e"/><rect x="2" y="3" width="1" height="1" fill="#e8b33c"/><rect x="1" y="0" width="1" height="2" fill="#c24b3f"/><rect x="3" y="0" width="1" height="2" fill="#c24b3f"/><rect x="2" y="6" width="1" height="2" fill="#3f7a2e"/><rect x="4" y="6" width="1" height="2" fill="#3f7a2e"/></svg></div><h3>Fantasy</h3><div class="size">8–12 WORDS</div></div>
+    </div>
+  </section>
+
+  <span class="mocknote">REVIEW · CONFIRM BEFORE PLAY</span>
+  <header class="topbar"><h1 style="font-size:1.6rem"><svg width="14" height="14" viewBox="0 0 8 8" style="image-rendering:pixelated" aria-hidden><rect x="4" y="0" width="2" height="2" fill="#faf1dc"/><rect x="2" y="2" width="2" height="2" fill="#faf1dc"/><rect x="0" y="3" width="2" height="2" fill="#faf1dc"/><rect x="2" y="4" width="2" height="2" fill="#faf1dc"/><rect x="4" y="6" width="2" height="2" fill="#faf1dc"/></svg> &nbsp;Ready to play?</h1>
+    <div class="coins"><svg width="16" height="16" viewBox="0 0 8 8" style="image-rendering:pixelated"><rect x="2" y="0" width="4" height="1" fill="#e8b33c"/><rect x="1" y="1" width="6" height="1" fill="#e8b33c"/><rect x="0" y="2" width="8" height="4" fill="#e8b33c"/><rect x="1" y="6" width="6" height="1" fill="#c9922a"/><rect x="2" y="7" width="4" height="1" fill="#c9922a"/><rect x="2" y="2" width="1" height="3" fill="#faf1dc"/></svg> 135</div></header>
+  <div class="reviewwrap">
+    <section class="panel" style="flex: 1 1 420px; display:flex; flex-direction:column; align-items:center; gap:14px;">
+      <div class="grid" style="grid-template-columns: repeat(8, 44px); grid-auto-rows: 44px;">
+        <!-- row0 -->
+        <i></i><i></i><i class="cell"></i><i></i><i></i><i></i><i class="cell"></i><i></i>
+        <i></i><i></i><i class="cell"></i><i></i><i></i><i></i><i class="cell"></i><i></i>
+        <i class="cell"></i><i class="cell"></i><i class="cell"></i><i class="cell"></i><i class="cell"></i><i class="cell"></i><i class="cell"></i><i></i>
+        <i></i><i class="cell"></i><i></i><i class="cell"></i><i></i><i class="cell"></i><i></i><i></i>
+        <i></i><i class="cell"></i><i></i><i class="cell"></i><i></i><i class="cell"></i><i></i><i></i>
+        <i></i><i class="cell"></i><i></i><i class="cell"></i><i class="cell"></i><i class="cell"></i><i class="cell"></i><i class="cell"></i>
+        <i></i><i class="cell"></i><i></i><i></i><i></i><i></i><i></i><i></i>
+      </div>
+      <div style="font-family:var(--font-grid); font-size:.8rem; color:var(--ink-soft)">7 WORDS · 8×7 GRID · NICE &amp; KNOTTY</div>
+      <div style="display:flex; gap:10px; flex-wrap:wrap; justify-content:center;">
+        <button class="btn" style="font-size:1.2rem; padding:10px 26px;">▶ Play</button>
+        <button class="btn secondary">⟳ Regenerate</button>
+        <button class="btn ghost">Edit words</button>
+      </div>
+    </section>
+    <aside class="panel" style="flex: 0 1 260px;">
+      <h2 style="font-size:1.1rem; margin-bottom:8px;">Word bank</h2>
+      <div style="display:flex; flex-wrap:wrap; gap:8px;">
+        <span class="chip">HARVEST</span><span class="chip">APPLE</span><span class="chip">VINE</span>
+        <span class="chip">SEED</span><span class="chip">FIR</span><span class="chip">OAT</span><span class="chip">ELDER</span>
+      </div>
+    </aside>
+  </div>
+
+</div>
+</body>
+</html>

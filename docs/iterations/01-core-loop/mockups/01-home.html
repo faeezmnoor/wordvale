@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>WordVale mockup — Home</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Pixelify+Sans:wght@400;600;700&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="mock-shared.css" />
+<style>
+  .hero { text-align: center; padding: 40px 24px 72px; overflow: hidden; }
+  .sun { position: absolute; top: 18px; right: 26px; }
+  .meadow { position: absolute; bottom: -3px; left: -3px; right: -3px; }
+  .hero h2 { font-size: 2.5rem; margin: 16px 0 8px; }
+  .hero p { color: var(--ink-soft); max-width: 420px; margin: 0 auto 24px; }
+  .meadowstrip { display: block; margin: 0 auto; image-rendering: pixelated; }
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-top: 12px; }
+  .card { padding: 14px; display: flex; flex-direction: column; gap: 8px; }
+  .card .thumb { display: grid; gap: 2px; justify-content: center; padding: 10px 0; }
+  .card .thumb i { display: block; width: 14px; height: 14px; border: 2px solid var(--wood-dark); background: var(--parchment-hi); }
+  .card .thumb i.on { background: var(--meadow); border-color: var(--meadow-dark); }
+  .card h3 { font-size: 1.05rem; }
+  .card .meta { color: var(--ink-soft); font-size: .82rem; display: flex; justify-content: space-between; align-items: center; }
+  .rowhead { display: flex; justify-content: space-between; align-items: center; margin: 8px 0 4px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <span class="mocknote">STATE 1 · FIRST RUN</span>
+  <header class="topbar"><h1 style="font-size:1.6rem">WordVale</h1>
+    <div class="coins"><svg width="16" height="16" viewBox="0 0 8 8" style="image-rendering:pixelated"><rect x="2" y="0" width="4" height="1" fill="#e8b33c"/><rect x="1" y="1" width="6" height="1" fill="#e8b33c"/><rect x="0" y="2" width="8" height="4" fill="#e8b33c"/><rect x="1" y="6" width="6" height="1" fill="#c9922a"/><rect x="2" y="7" width="4" height="1" fill="#c9922a"/><rect x="2" y="2" width="1" height="3" fill="#faf1dc"/></svg> 0</div>
+  </header>
+
+  <section class="panel hero">
+    <svg class="flora tl" viewBox="0 0 14 14"><rect x="1" y="9" width="2" height="4" fill="#3f7a2e"/><rect x="3" y="6" width="2" height="2" fill="#5fa344"/><rect x="0" y="6" width="2" height="2" fill="#5fa344"/><rect x="5" y="10" width="2" height="3" fill="#3f7a2e"/><rect x="6" y="8" width="2" height="2" fill="#e8b33c"/></svg>
+    <!-- sprout mascot -->
+    <svg width="96" height="96" viewBox="0 0 16 16" style="image-rendering:pixelated" aria-hidden>
+      <rect x="6" y="10" width="4" height="4" fill="#8a5a38"/><rect x="5" y="13" width="6" height="2" fill="#5b3a24"/>
+      <rect x="7" y="7" width="2" height="3" fill="#3f7a2e"/>
+      <rect x="4" y="5" width="3" height="3" fill="#5fa344"/><rect x="9" y="5" width="3" height="3" fill="#5fa344"/>
+      <rect x="6" y="3" width="4" height="3" fill="#5fa344"/>
+      <rect x="7" y="11" width="1" height="1" fill="#3b2a1e"/><rect x="9" y="11" width="1" height="1" fill="#3b2a1e"/>
+    </svg>
+    <h2>Turn any words into a cozy crossword</h2>
+    <p>Paste a list, pick a theme, or just say the words — WordVale weaves them into a puzzle you can play anywhere.</p>
+    <button class="btn" style="font-size:1.25rem; padding: 12px 28px;"><svg width="18" height="18" viewBox="0 0 8 8" style="image-rendering:pixelated"><rect x="3" y="4" width="2" height="4" fill="#3f7a2e"/><rect x="1" y="2" width="2" height="2" fill="#7dbb5e"/><rect x="5" y="2" width="2" height="2" fill="#7dbb5e"/><rect x="3" y="1" width="2" height="2" fill="#5fa344"/></svg> Create your first crossword</button>
+    <span class="sun"><svg width="40" height="40" viewBox="0 0 8 8" style="image-rendering:pixelated" aria-hidden><rect x="2" y="2" width="4" height="4" fill="#e8b33c"/><rect x="3" y="0" width="2" height="1" fill="#e8b33c"/><rect x="3" y="7" width="2" height="1" fill="#e8b33c"/><rect x="0" y="3" width="1" height="2" fill="#e8b33c"/><rect x="7" y="3" width="1" height="2" fill="#e8b33c"/><rect x="1" y="1" width="1" height="1" fill="#c9922a"/><rect x="6" y="6" width="1" height="1" fill="#c9922a"/><rect x="6" y="1" width="1" height="1" fill="#c9922a"/><rect x="1" y="6" width="1" height="1" fill="#c9922a"/></svg></span><div class="meadow"><svg width="100%" height="34" viewBox="0 0 260 10" preserveAspectRatio="none" style="display:block; image-rendering:pixelated"><rect x="0" y="4" width="260" height="6" fill="#5fa344"/><rect x="0" y="4" width="260" height="1" fill="#7dbb5e"/><rect x="14" y="1" width="3" height="3" fill="#3f7a2e"/><rect x="48" y="2" width="2" height="2" fill="#e8b33c"/><rect x="86" y="1" width="2" height="3" fill="#c24b3f"/><rect x="120" y="2" width="3" height="2" fill="#3f7a2e"/><rect x="160" y="1" width="2" height="3" fill="#e8b33c"/><rect x="200" y="2" width="2" height="2" fill="#c24b3f"/><rect x="236" y="0" width="3" height="4" fill="#3f7a2e"/></svg></div>
+  </section>
+
+  <span class="mocknote">STATE 2 · WITH LIBRARY</span>
+  <header class="topbar"><h1 style="font-size:1.6rem">WordVale</h1>
+    <div class="coins"><svg width="16" height="16" viewBox="0 0 8 8" style="image-rendering:pixelated"><rect x="2" y="0" width="4" height="1" fill="#e8b33c"/><rect x="1" y="1" width="6" height="1" fill="#e8b33c"/><rect x="0" y="2" width="8" height="4" fill="#e8b33c"/><rect x="1" y="6" width="6" height="1" fill="#c9922a"/><rect x="2" y="7" width="4" height="1" fill="#c9922a"/><rect x="2" y="2" width="1" height="3" fill="#faf1dc"/></svg> 135</div>
+  </header>
+
+  <div class="rowhead">
+    <h2 style="font-size:1.3rem">Your crosswords</h2>
+    <button class="btn">+ New puzzle</button>
+  </div>
+  <div class="cards">
+    <div class="panel card">
+      <div class="thumb" style="grid-template-columns: repeat(6, 14px);">
+        <i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i>
+        <i></i><i class="on"></i><i></i><i></i><i></i><i></i>
+        <i></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i>
+        <i></i><i></i><i></i><i class="on"></i><i></i><i></i>
+      </div>
+      <h3>Farm words</h3>
+      <div class="meta"><span>7 words · today</span><span class="statuschip solved">SOLVED <svg width="10" height="10" viewBox="0 0 8 8" style="image-rendering:pixelated" aria-hidden><rect x="3" y="0" width="2" height="2" fill="#e8b33c"/><rect x="0" y="2" width="8" height="2" fill="#e8b33c"/><rect x="1" y="4" width="6" height="1" fill="#e8b33c"/><rect x="2" y="5" width="4" height="1" fill="#e8b33c"/><rect x="1" y="6" width="2" height="1" fill="#e8b33c"/><rect x="5" y="6" width="2" height="1" fill="#e8b33c"/><rect x="3" y="4" width="2" height="1" fill="#c9922a"/></svg></span></div>
+    </div>
+    <div class="panel card">
+      <div class="thumb" style="grid-template-columns: repeat(6, 14px);">
+        <i></i><i class="on"></i><i></i><i class="on"></i><i></i><i></i>
+        <i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i>
+        <i></i><i class="on"></i><i></i><i class="on"></i><i></i><i></i>
+        <i></i><i></i><i></i><i class="on"></i><i class="on"></i><i class="on"></i>
+      </div>
+      <h3>Bio exam ch. 4</h3>
+      <div class="meta"><span>12 words · yesterday</span><span class="statuschip progress">IN PROGRESS</span></div>
+    </div>
+    <div class="panel card">
+      <div class="thumb" style="grid-template-columns: repeat(6, 14px);">
+        <i class="on"></i><i></i><i class="on"></i><i></i><i></i><i></i>
+        <i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i>
+        <i class="on"></i><i></i><i class="on"></i><i></i><i></i><i></i>
+        <i></i><i></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i>
+      </div>
+      <h3><svg width="14" height="14" viewBox="0 0 8 8" style="image-rendering:pixelated" aria-hidden><rect x="1" y="3" width="6" height="4" fill="#c24b3f"/><rect x="3" y="3" width="2" height="4" fill="#e8b33c"/><rect x="1" y="2" width="6" height="1" fill="#8f3428"/><rect x="2" y="0" width="1" height="2" fill="#3f7a2e"/><rect x="5" y="0" width="1" height="2" fill="#3f7a2e"/><rect x="3" y="1" width="2" height="2" fill="#e8b33c"/></svg> Travel · Set 2</h3>
+      <div class="meta"><span>9 words · Aug 9</span><span class="statuschip solved">SOLVED <svg width="10" height="10" viewBox="0 0 8 8" style="image-rendering:pixelated" aria-hidden><rect x="3" y="0" width="2" height="2" fill="#e8b33c"/><rect x="0" y="2" width="8" height="2" fill="#e8b33c"/><rect x="1" y="4" width="6" height="1" fill="#e8b33c"/><rect x="2" y="5" width="4" height="1" fill="#e8b33c"/><rect x="1" y="6" width="2" height="1" fill="#e8b33c"/><rect x="5" y="6" width="2" height="1" fill="#e8b33c"/><rect x="3" y="4" width="2" height="1" fill="#c9922a"/></svg></span></div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

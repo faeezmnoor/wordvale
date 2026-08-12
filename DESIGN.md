@@ -46,6 +46,10 @@ pocket game, not using a generator tool.
 | `--sky` | `#5A9BD8` | Info, selection highlight |
 | `--gold` | `#E8B33C` | Coins, score, celebration |
 | `--berry` | `#C24B3F` | Errors, destructive |
+| `--sky-tint` | `#DCEBF7` | Focused-word cell fill |
+| `--meadow-hi` | `#7DBB5E` | Grass highlight |
+| `--gold-dark` | `#C9922A` | Coin shading, solved-chip text |
+| `--berry-dark` | `#8F3428` | Error borders/pressed |
 
 - **Semantic:** success `--meadow`, info `--sky`, warning `--gold`, error `--berry`.
 - **Dark mode ("night on the farm"):** deferred to backlog — v1 ships the single warm-light look.
@@ -53,8 +57,12 @@ pocket game, not using a generator tool.
 
 ## Spacing & Tiles
 - **Base unit:** 4px. Scale: 4 / 8 / 12 / 16 / 24 / 32 / 48.
-- **Tile size:** 32px logical grid cell (art authored at 16px, scaled ×2). **Integer scaling only**
-  — sprites and cells scale ×1/×2/×3, never fractional; `image-rendering: pixelated` on all pixel art.
+- **Tile size:** grid cells fit their container at any whole-pixel size 24–72px (letters are font
+  glyphs, not sprite art — free scaling is safe). **Integer scaling (×1/×2/×3) applies to sprite
+  art only** (icons, mascot, decorations, authored on 8/16px grids); `image-rendering: pixelated`
+  on all pixel art. *(Amended 2026-08-12 by design-review — previous "32px only" rule conflicted
+  with the fit-to-container space directive.)*
+- **Silkscreen floor:** never below 12px (0.75rem) — the face goes mushy under its pixel grid.
 - **Density:** comfortable; the grid is the hero, chrome stays out of its way.
 
 ## Layout
@@ -88,3 +96,5 @@ pocket game, not using a generator tool.
 | 2026-08-12 | Initial system via /design-consultation (autonomous; owner gate pending) | Recommended choices made solo per launch brief; Faeez judges the in-stack preview at the Iteration-0 owner gate |
 | 2026-08-12 | Pixelify Sans over Press Start 2P | Rounded warmth fits cozy-sim mood; PS2P reads harsh arcade and is illegible small |
 | 2026-08-12 | Dark mode deferred to backlog | v1 scope discipline; single warm look ships polished |
+| 2026-08-12 | Pixelify Sans allowed on buttons/tabs for labels ≤3 words; DM Sans for all sentence-length UI text | Design-review found the drift, judged it right for game feel — recorded instead of silent |
+| 2026-08-12 | Derived tokens promoted (`--sky-tint`, `--meadow-hi`, `--gold-dark`, `--berry-dark`); tile-size rule scoped to sprite art; Silkscreen 12px floor | Stage-2 design-review findings #7/#8/#12/#14 |
