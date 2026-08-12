@@ -2,11 +2,12 @@
 
 > Resume point for any session. Update after every stage transition and every gate.
 
-- **Current iteration:** 01-core-loop (full cycle)
-- **Current stage:** Stage 5 complete pending owner SHIP gate
-- **Open AI gates:** none — all slices reviewed, QA green (see 05-qa-report.md)
-- **Open owner gates:** **SHIP** — Faeez plays the app (`bun run dev`) and approves, or lists
-  changes. Iteration-2 planning (economy) starts after.
+- **Current iteration:** 01-core-loop — **SHIPPED 2026-08-12** (owner approved)
+- **Current stage:** Stage 6 — deploy + iterate
+- **Open AI gates:** none
+- **Open owner gates:** none blocking. Next: Iteration-2 planning (economy: score, coins,
+  escalating letter reveals, slot machine + the parked difficulty brainstorm).
+- **Deployment:** GitHub `faeezmnoor/wordvale`; Vercel (see docs/deploy.md)
 - **Owner feedback routed:** see [iterations/01-core-loop/00-owner-feedback.md](iterations/01-core-loop/00-owner-feedback.md)
 
 ## Gate log
@@ -28,4 +29,4 @@
 | 2026-08-12 | 01 | Slices a–f built | ALL SHIPPED — 27 tests green, `bun run build` clean |
 | 2026-08-12 | 01 | `/review` on slices a / b+c / d–f | PASS after fixes (8-angle, focused, and final passes; 1+5+8 findings fixed) |
 | 2026-08-12 | 01 | Stage-5 QA (browser, all criteria + failure paths + 360/768/1280) | **PASS** — 6 QA bugs found & fixed; grid fills 92–93%; no console errors |
-| 2026-08-12 | 01 | Owner gate (SHIP) | **PENDING — Faeez** |
+| 2026-08-12 | 01 | Owner gate (SHIP) | **PASS — "let's ship it"** |

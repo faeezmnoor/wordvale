@@ -1,32 +1,39 @@
-# React + TypeScript + Vite
+# WordVale
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Turn any word list into a cozy pixel-art crossword you can play in the browser.
 
-Currently, two official plugins are available:
+Paste words, pick a theme, or bring your own list — WordVale weaves them into a
+word-bank fill-in (kriss-kross) puzzle, then you solve it by typing or by tapping
+words into their slots. Everything runs client-side: no backend, no accounts, and
+your puzzles are saved in your own browser.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Play locally
 
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
-
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+```bash
+bun install
+bun run dev          # http://localhost:5173
+bun run dev --host   # also serve on your local network (for phones)
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+## Commands
+
+```bash
+bun run check   # typecheck + lint + tests — must be green before every commit
+bun run test    # engine + play-machine tests
+bun run build   # production build to dist/
+```
+
+## What's inside
+
+- **`src/engine/`** — the puzzle generator: pure, seeded, no DOM. Given words and a seed it
+  produces a legal interlocking grid, or explains precisely why it can't.
+- **`src/ui/playMachine.ts`** — the play-screen state machine (typing, Tab cycling, word
+  placement, solving), also pure and unit-tested.
+- **`src/ui/`** — React screens in a hand-built pixel design system (see [DESIGN.md](DESIGN.md)).
+- **`src/audio/`** — all sound effects and ambience synthesized at runtime; no audio assets.
+- **`docs/`** — how this project is built: the [workflow contract](docs/workflow.md), the
+  [iteration plans](docs/iterations/), and the design system.
+
+## Deploying
+
+See [docs/deploy.md](docs/deploy.md).
