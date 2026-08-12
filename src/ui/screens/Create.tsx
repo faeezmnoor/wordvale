@@ -1,9 +1,10 @@
-import { useMemo, useState } from 'react'
+import { useMemo, useRef, useState } from 'react'
 import { MAX_WORDS, MIN_WORDS, precheck, type GenResult } from '../../engine'
 import { useApp } from '../../state/store'
 import { useGenerate } from '../useGenerate'
 import { TopBar } from '../components/TopBar'
 import {
+  ArrowSprite,
   CameraSprite,
   GiftSprite,
   HourglassSprite,
@@ -26,13 +27,17 @@ export default function Create() {
   const [tab, setTab] = useState<Tab>('words')
   const [failure, setFailure] = useState<GenResult | null>(null)
   const [seed] = useState(() => (Date.now() % 100000) + 1)
+  const attempt = useRef(0)
+  // words actually sent to the worker — the live `pre` may change while it runs
+  const requested = useRef<string[]>([])
 
   const pre = useMemo(() => precheck(createText.split(/[\n,]+/)), [createText])
   const canGenerate = pre.countError === null && pre.valid.length >= MIN_WORDS
 
   const { request, pending } = useGenerate((result) => {
     if (result.status === 'complete') {
-      setDraft({ words: pre.valid, result, title: pre.valid.slice(0, 2).join(' · ').toLowerCase() }, pre)
+      const words = requested.current
+      setDraft({ words, result, title: words.slice(0, 2).join(' · ').toLowerCase() })
       setFailure(null)
       go('review')
     } else {
@@ -42,13 +47,16 @@ export default function Create() {
 
   const generate = () => {
     setFailure(null)
-    request(pre.valid, seed + pre.valid.join('').length)
+    requested.current = pre.valid
+    attempt.current += 1
+    request(pre.valid, seed + attempt.current) // new seed every attempt (Try again must differ)
   }
 
   const acceptPartial = () => {
     if (!failure) return
-    const kept = pre.valid.filter((w) => !failure.unplaced.includes(w))
-    setDraft({ words: kept, result: failure, title: kept.slice(0, 2).join(' · ').toLowerCase() }, pre)
+    // ground truth = what the engine actually placed (race-immune)
+    const kept = failure.placements.map((p) => p.word)
+    setDraft({ words: kept, result: failure, title: kept.slice(0, 2).join(' · ').toLowerCase() })
     go('review')
   }
 
@@ -107,7 +115,7 @@ export default function Create() {
               {pre.countError === 'tooMany' && ` — that's too many`}
             </span>
             <button className="btn" disabled={!canGenerate || pending} onClick={generate}>
-              {pending ? 'Weaving…' : 'Generate ➜'}
+              {pending ? 'Weaving…' : <>Generate <ArrowSprite /></>}
             </button>
           </div>
         </section>
@@ -117,6 +125,25 @@ export default function Create() {
         <section className="panel" style={{ padding: 20 }}>
           <p style={{ color: 'var(--ink-soft)', margin: 0 }}>
             Themed packs arrive with the next slice — for now, bring your own words!
+          </p>
+        </section>
+      )}
+
+      {pre.isolates.length > 0 && !pending && !failure && (
+        <section className="panel failure" style={{ padding: 20, marginTop: 16 }}>
+          <h2 style={{ fontSize: '1.1rem' }}>These words don't share letters with the rest</h2>
+          <p style={{ color: 'var(--ink-soft)', margin: '6px 0 10px' }}>
+            They can't join the grid — generating will leave them out.
+          </p>
+          <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 12 }}>
+            {pre.isolates.map((w) => (
+              <span key={w} className="chip bad">
+                {w}
+              </span>
+            ))}
+          </div>
+          <p style={{ color: 'var(--ink-soft)', fontSize: '.85rem', margin: 0 }}>
+            Edit them above, or press Generate to play without them.
           </p>
         </section>
       )}
@@ -156,6 +183,9 @@ export default function Create() {
                     </button>
                     <button className="btn secondary" onClick={generate}>
                       Try again
+                    </button>
+                    <button className="btn ghost" onClick={() => setFailure(null)}>
+                      Edit words
                     </button>
                   </div>
                 </>

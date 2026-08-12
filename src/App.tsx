@@ -3,6 +3,7 @@ import { useApp } from './state/store'
 import Home from './ui/screens/Home'
 import Create from './ui/screens/Create'
 import Review from './ui/screens/Review'
+import Play from './ui/screens/Play'
 
 // Dev-only: lazy so the harness (and its debug UI) stays out of the production bundle.
 const DebugHarness = lazy(() => import('./ui/DebugHarness'))
@@ -28,23 +29,8 @@ export default function App() {
     case 'review':
       return <Review />
     case 'play':
-      return <PlayStub />
+      return <Play />
     default:
       return <Home />
   }
-}
-
-// Replaced by the real play screen in slice d.
-function PlayStub() {
-  const go = useApp((s) => s.go)
-  return (
-    <div className="page">
-      <section className="panel" style={{ padding: 24, textAlign: 'center' }}>
-        <h2 style={{ marginBottom: 12 }}>Play screen arrives in the next slice</h2>
-        <button className="btn" onClick={() => go('review')}>
-          Back to review
-        </button>
-      </section>
-    </div>
-  )
 }

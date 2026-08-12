@@ -1,22 +1,41 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { boundsOf, cellsOf, qualityPhrase } from '../../engine'
 import { useApp } from '../../state/store'
 import { useGenerate } from '../useGenerate'
 import { FittedGrid } from '../components/FittedGrid'
 import { TopBar } from '../components/TopBar'
-import { HourglassSprite } from '../components/Sprites'
+import { HourglassSprite, PlaySprite, RefreshSprite } from '../components/Sprites'
 
 export default function Review() {
   const { draft, setDraft, go, setCreateText } = useApp()
   const [legend, setLegend] = useState(false)
+  const [keptBetter, setKeptBetter] = useState(false)
+  // regen seed advances on EVERY attempt, even when we keep the old layout —
+  // otherwise a rejected result makes the button deterministically dead.
+  const regenSeed = useRef<number | null>(null)
 
   const { request, pending } = useGenerate((result) => {
     if (!draft) return
-    // regeneration keeps the same words; partial can't regress to fewer here — keep best
     if (result.placements.length >= draft.result.placements.length) {
+      setKeptBetter(false)
       setDraft({ ...draft, result })
+    } else {
+      setKeptBetter(true)
     }
   })
+
+  const regenerate = () => {
+    if (!draft) return
+    const base = regenSeed.current ?? draft.result.seed
+    const next = base + 1
+    regenSeed.current = next
+    setKeptBetter(false)
+    request(draft.words, next)
+  }
+
+  useEffect(() => {
+    if (!draft) go('home')
+  }, [draft, go])
 
   const slots = useMemo(() => {
     const s = new Set<string>()
@@ -24,10 +43,7 @@ export default function Review() {
     return s
   }, [draft])
 
-  if (!draft) {
-    go('home')
-    return null
-  }
+  if (!draft) return null
 
   const bounds = boundsOf(draft.result.placements)
   const phrase = qualityPhrase(draft.result.metrics)
@@ -58,17 +74,18 @@ export default function Review() {
           >
             {draft.result.placements.length} WORDS · {bounds.cols}×{bounds.rows} GRID · {phrase.toUpperCase()}
             {legend && <div style={{ marginTop: 4, textTransform: 'none' }}>knotty = lots of crossings · cosy = snug fit · loose = roomy</div>}
+            {keptBetter && !pending && (
+              <div style={{ marginTop: 6, color: 'var(--gold-dark)', textTransform: 'none' }}>
+                kept the better layout — try again for a different one
+              </div>
+            )}
           </div>
           <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', justifyContent: 'center' }}>
             <button className="btn" style={{ fontSize: '1.2rem', padding: '10px 26px' }} onClick={() => go('play')}>
-              ▶ Play
+              <PlaySprite /> Play
             </button>
-            <button
-              className="btn secondary"
-              disabled={pending}
-              onClick={() => request(draft.words, draft.result.seed + 1)}
-            >
-              ⟳ Regenerate
+            <button className="btn secondary" disabled={pending} onClick={regenerate}>
+              <RefreshSprite /> Regenerate
             </button>
             <button
               className="btn ghost"

@@ -16,6 +16,19 @@ export function useGenerate(onResult: (result: GenResult) => void) {
       setPending(false)
       onResultRef.current(e.data.result)
     }
+    // never leave the UI stuck on "Weaving…" if the worker dies
+    const fail = () => {
+      setPending(false)
+      onResultRef.current({
+        status: 'failed',
+        placements: [],
+        unplaced: [],
+        metrics: { placedRatio: 0, xPerWord: 0, density: 0, balance: 0, score: 0, placed: 0, crossings: 0 },
+        seed: 0,
+      })
+    }
+    worker.onerror = fail
+    worker.onmessageerror = fail
     workerRef.current = worker
     return () => worker.terminate()
   }, [])

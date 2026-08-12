@@ -160,3 +160,60 @@ export function HourglassSprite({ size = 32 }: { size?: number }) {
     />
   )
 }
+
+export function ArrowSprite({ size = 14 }: { size?: number }) {
+  return (
+    <Px
+      size={size}
+      rects={[
+        [0, 3, 6, 2, '#faf1dc'],
+        [4, 1, 2, 2, '#faf1dc'],
+        [6, 2, 2, 4, '#faf1dc'],
+        [4, 5, 2, 2, '#faf1dc'],
+      ]}
+    />
+  )
+}
+
+export function PlaySprite({ size = 16 }: { size?: number }) {
+  return (
+    <Px
+      size={size}
+      rects={[
+        [2, 1, 2, 6, '#faf1dc'],
+        [4, 2, 2, 4, '#faf1dc'],
+        [6, 3, 1, 2, '#faf1dc'],
+      ]}
+    />
+  )
+}
+
+export function RefreshSprite({ size = 16 }: { size?: number }) {
+  return (
+    <Px
+      size={size}
+      rects={[
+        [2, 1, 4, 1, '#faf1dc'],
+        [1, 2, 1, 4, '#faf1dc'],
+        [6, 2, 1, 4, '#faf1dc'],
+        [2, 6, 4, 1, '#faf1dc'],
+        [5, 0, 1, 3, '#faf1dc'],
+        [6, 0, 2, 1, '#faf1dc'],
+      ]}
+    />
+  )
+}
+
+export function CheckSprite({ size = 16 }: { size?: number }) {
+  return (
+    <Px
+      size={size}
+      rects={[
+        [1, 4, 2, 2, '#faf1dc'],
+        [3, 5, 2, 2, '#faf1dc'],
+        [5, 2, 2, 3, '#faf1dc'],
+        [6, 1, 2, 2, '#faf1dc'],
+      ]}
+    />
+  )
+}
