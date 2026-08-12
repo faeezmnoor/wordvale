@@ -3,12 +3,11 @@
 > Resume point for any session. Update after every stage transition and every gate.
 
 - **Current iteration:** 01-core-loop (full cycle)
-- **Current stage:** Stage 2 complete pending owner gate
-- **Open AI gates:** none — design-review PASS-WITH-FIXES (all fixes applied) + quick council PASS on 02-design.md
-- **Open owner gates:** **Stage-2 design approval** — Faeez reviews mockup screenshots (or opens
-  `docs/iterations/01-core-loop/mockups/*.html` in a browser for the live motion). Approve =
-  aesthetic + layouts locked; Stage 3 tech spec starts. Also riding this gate: proposed
-  contract amendment (full council for Stage-1 plans; quick council for Stage-2/3 docs).
+- **Current stage:** Stage 3 complete pending owner gate
+- **Open AI gates:** none — quick council PASS on 03-tech-spec.md, amendments applied
+- **Open owner gates:** **Stage-3 build authorization** — plain-language summary delivered in
+  chat. Approve = slices a→f build back-to-back with per-slice AI gates + async G-accepts;
+  no further blocking owner input until Stage-5 SHIP.
 - **Owner feedback routed:** see [iterations/01-core-loop/00-owner-feedback.md](iterations/01-core-loop/00-owner-feedback.md)
 
 ## Gate log
@@ -24,4 +23,6 @@
 | 2026-08-12 | 01 | Owner gate (Stage-1 plan) | **PASS — approved** with 2 directives (space optimization, no drag); Q1–5 defaults adopted |
 | 2026-08-12 | 01 | /design-review on Stage-2 mockups | **PASS-WITH-FIXES** — 2 blockers + 17 findings; all blockers/majors fixed same-day |
 | 2026-08-12 | 01 | Quick council + devil's advocate on 02-design.md | **PASS with amendments** — mobile keyboard = summoned overlay; live motion added to mockups (DA catch); Stage-3 appendix mandated. Deviation: quick not full council (recorded; contract amendment proposed) |
-| 2026-08-12 | 01 | Owner gate (Stage-2 design) | **PENDING — Faeez** |
+| 2026-08-12 | 01 | Owner gate (Stage-2 design) | **PASS — approved** + sound directive (SFX + home ambience → I1 scope; design spec §Sound); council-sizing amendment default-approved → gates.md |
+| 2026-08-12 | 01 | Quick council on 03-tech-spec.md | **PASS with amendments** (applied): backtracking pseudocode + forced fixture, canonical fill model, Tab/Backspace semantics, self-play rubric, slice-b fixtures. DA skipped — no decision tension (recorded) |
+| 2026-08-12 | 01 | Owner gate (Stage-3 build authorization) | **PENDING — Faeez** |
