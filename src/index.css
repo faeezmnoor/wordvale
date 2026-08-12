@@ -94,6 +94,7 @@ h3 {
 
 /* Wooden panel — hard pixel depth, never blur/radius (DESIGN.md → Layout) */
 .panel {
+  position: relative; /* decorations (sun, meadow, flora) anchor to the panel, not the page */
   background: var(--parchment-hi);
   border: 3px solid var(--wood-dark);
   box-shadow: 4px 4px 0 rgba(91, 58, 36, 0.35);
