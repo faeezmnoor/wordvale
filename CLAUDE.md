@@ -5,6 +5,10 @@ fill-in (kriss-kross) puzzle → review/confirm/regenerate → play. No backend;
 IndexedDB (puzzles/history) + localStorage (settings/wallet). Pixel-art, Stardew-Valley-inspired,
 gamified (score, coins, letter reveals, slot-machine bonus).
 
+> **Project status: paused (2026-08-12) after Iteration 1 shipped.** It is live and open
+> source. Future ideas are grouped and ready to plan in [ROADMAP.md](ROADMAP.md); the closing
+> retro is in [docs/iterations/01-core-loop/06-retro.md](docs/iterations/01-core-loop/06-retro.md).
+
 ## Workflow — read first
 
 This project runs a strict 6-stage gated cycle. **Before doing anything, read

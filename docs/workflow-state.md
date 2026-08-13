@@ -2,15 +2,28 @@
 
 > Resume point for any session. Update after every stage transition and every gate.
 
-- **Current iteration:** 01-core-loop — **SHIPPED 2026-08-12** (owner approved)
-- **Current stage:** Stage 6 — deploy + iterate
-- **Open AI gates:** none
-- **Open owner gates:** none blocking. Next: Iteration-2 planning (economy: score, coins,
-  escalating letter reveals, slot machine + the parked difficulty brainstorm).
-- **Deployment:** LIVE at <https://wordvale-two.vercel.app> · repo `faeezmnoor/wordvale`
-  (**public**, MIT-licensed) · see [deploy.md](deploy.md). pushes to `main` auto-deploy;
-  `npx vercel --prod` deploys the working tree.
-- **Owner feedback routed:** see [iterations/01-core-loop/00-owner-feedback.md](iterations/01-core-loop/00-owner-feedback.md)
+## ⏸ PAUSED — 2026-08-12
+
+Iteration 1 shipped, deployed, and open-sourced; the project was then paused as a side
+project. **Nothing is half-finished** — the working tree is clean, CI is green, production is
+live, and Iteration 1's retro is written.
+
+- **Live:** <https://wordvale-two.vercel.app> · **Repo:** <https://github.com/faeezmnoor/wordvale>
+  (public, MIT) · pushes to `main` auto-deploy.
+- **Completed:** Iteration 0 (foundations) and Iteration 1 (core loop), each through all six
+  stages with owner approval.
+- **Not built from the original v1 plan:** coin economy (Iteration 2), OCR input (3), voice
+  input (4). Recorded honestly at the top of [`../ROADMAP.md`](../ROADMAP.md).
+- **One task left that needs a browser:** upload `public/og-image.png` as the GitHub repo's
+  social preview (Settings → General → Social preview). Everything else is done.
+
+### To resume
+
+1. `bun install && bun run check` — must be green (it was when paused).
+2. Read [`../ROADMAP.md`](../ROADMAP.md) for grouped, ready-to-plan ideas.
+3. Pick a goal *with the owner*, then start a new Stage-1 plan at
+   `docs/iterations/02-<name>/01-plan.md` and follow [`workflow.md`](workflow.md).
+   Open questions worth settling first are in ROADMAP §7.
 
 ## Gate log
 

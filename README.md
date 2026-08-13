@@ -156,9 +156,10 @@ Issues and pull requests are welcome. A few things worth knowing before you star
 - New gameplay constants belong in [`src/state/economy.ts`](src/state/economy.ts) or
   [`src/engine/config.ts`](src/engine/config.ts), not scattered inline.
 
-Ideas already on the list live in [docs/backlog.md](docs/backlog.md) — including several ways
-to make the puzzles harder (hiding the word bank, first-letter-only hints, timed modes) and a
-coin economy with letter reveals.
+**[ROADMAP.md](ROADMAP.md)** is the place to look for what's next: it groups every idea we
+considered — harder puzzle modes, a coin economy, growing plants where you solve, shareable
+puzzle links — with notes on where each one would live in the code and what would make it
+done. It's also honest about what was planned for v1 and never built.
 
 ## License
 
