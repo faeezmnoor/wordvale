@@ -1,8 +1,9 @@
 # STATE — WordVale
 <!-- layer: state · status: living · budget: 80 lines -->
-verified: 2026-10-06 at ab7b75b by bun run check (exit 0), bun .standard/standard-check.mjs . (0 FAIL), gates G3-G5 (exit 0), reviewer cold-start (pass)
+verified: 2026-10-06 at cb05950 by CI on PR #1 (Typecheck/lint/tests, Documentation standard, Vercel preview all green) and the reviewer cold-start test (pass)
 
 ## Now
+- Adopted the house standard at Minimal tier (PR #1, merged 2026-10-06): AGENTS.md, STATE.md, roadmap, records and archive, CI with the lint required on main.
 - Live: the app at the URL README.md names; Iteration 1 (core loop) shipped 2026-08-12.
 - Paused since 2026-08-12; nothing half-finished, nothing merged but undeployed.
 - Pushes to main deploy automatically (verified 2026-08-12); the deploy steps are in docs/runbooks/deploy.md.
@@ -29,5 +30,5 @@ verified: 2026-10-06 at ab7b75b by bun run check (exit 0), bun .standard/standar
 ## Measurements
 | Slice | Builder tokens | Reviewer tokens | Fix rounds |
 | --- | --- | --- | --- |
-| 002-adopt-standard | not recorded | not recorded | 0 |
-Owner minutes this week: not recorded. Last cold-start test: builder self-check 2026-10-06 (answers in docs/slices/002-adopt-standard/notes.md); independent fresh-agent test pending.
+| 002-adopt-standard | ~90k | ~74k | 0 (path fixes only) |
+Owner minutes this week: 0. Last cold-start test: 2026-10-06, pass (independent reviewer).
