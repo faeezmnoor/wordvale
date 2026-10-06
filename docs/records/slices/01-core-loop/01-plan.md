@@ -1,3 +1,4 @@
+<!-- layer: records · status: record · verified: 2026-10-06 -->
 # Iteration 1 — Core Loop (full cycle) · Stage 1 Plan
 
 **Goal:** a stranger can paste a word list (or pick a theme) and be playing a good crossword

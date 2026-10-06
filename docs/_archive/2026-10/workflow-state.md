@@ -1,3 +1,4 @@
+<!-- layer: records · status: archived · verified: 2026-10-06 -->
 # Workflow state
 
 > Resume point for any session. Update after every stage transition and every gate.

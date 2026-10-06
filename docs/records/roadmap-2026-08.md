@@ -1,3 +1,4 @@
+<!-- layer: records · status: record · verified: 2026-10-06 -->
 # WordVale — Roadmap & Idea Bank
 
 **Status: paused 2026-08-12, after Iteration 1 shipped.** The game is live, playable, and

@@ -1,3 +1,4 @@
+<!-- layer: records · status: archived · verified: 2026-10-06 -->
 # Backlog — scope parking lot
 
 Ideas land here the moment they appear; nothing enters a running iteration after its Stage-1 scope lock.

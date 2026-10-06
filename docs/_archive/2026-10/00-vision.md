@@ -1,3 +1,4 @@
+<!-- layer: records · status: archived · verified: 2026-10-06 -->
 # WordVale — v1 Vision
 
 ## Goal

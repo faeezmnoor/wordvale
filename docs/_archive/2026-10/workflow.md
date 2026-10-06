@@ -1,3 +1,4 @@
+<!-- layer: records · status: archived · verified: 2026-10-06 -->
 # WordVale Development Workflow (canonical)
 
 Every iteration of WordVale runs a 6-stage cycle. AI works autonomously within a stage;

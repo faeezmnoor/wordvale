@@ -1,3 +1,4 @@
+<!-- layer: records · status: record · verified: 2026-10-06 -->
 # Iteration 1 — Stage 5 QA report (2026-08-12)
 
 Browser QA run against the built app (headless Chromium + manual measurement), plus the

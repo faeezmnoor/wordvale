@@ -1,3 +1,4 @@
+<!-- layer: records · status: record · verified: 2026-10-06 -->
 # Iteration 1 — Stage 3 Tech Spec
 
 Implements [01-plan.md](01-plan.md) + [02-design.md](02-design.md). Slices build in order
