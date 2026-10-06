@@ -1,3 +1,4 @@
+<!-- layer: records · status: archived · verified: 2026-10-06 -->
 # Gate definitions (one page, operational)
 
 > Answers, for every gate: what runs, what "pass" means, and what happens on failure.

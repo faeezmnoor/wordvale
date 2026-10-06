@@ -1,3 +1,4 @@
+<!-- layer: records · status: record · verified: 2026-10-06 -->
 # Iteration 1 — Stage 6 Retro (closes the cycle)
 
 **Shipped 2026-08-12.** Goal was: a stranger can paste a word list or pick a theme and be

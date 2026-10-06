@@ -1,3 +1,4 @@
+<!-- layer: records · status: record · verified: 2026-10-06 -->
 # Iteration 1 — Stage 2 Design Spec
 
 Applies [DESIGN.md](../../../DESIGN.md) to the core-loop screens. Mockups in

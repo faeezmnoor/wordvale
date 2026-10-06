@@ -1,3 +1,4 @@
+<!-- layer: records · status: record · verified: 2026-10-06 -->
 # Iteration 1 — Build log
 
 ## Slice a — generator engine (2026-08-12)

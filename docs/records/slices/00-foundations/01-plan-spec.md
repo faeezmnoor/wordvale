@@ -1,3 +1,4 @@
+<!-- layer: records · status: record · verified: 2026-10-06 -->
 # Iteration 0 — Foundations (light cycle: merged plan + spec)
 
 **Goal:** a repo where every later iteration can move fast safely — gates wired, harness green,

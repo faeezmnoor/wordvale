@@ -1,3 +1,4 @@
+<!-- layer: records · status: record · verified: 2026-10-06 -->
 # Owner feedback at Iteration-0 approval (2026-08-12)
 
 Faeez approved Iteration 0 with four comments. Routing:
