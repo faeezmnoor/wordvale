@@ -1,4 +1,4 @@
-<!-- layer: records · status: living (while open) · verified: 2026-10-06 -->
+<!-- layer: knowledge · status: living (while open) · verified: 2026-10-06 -->
 # 002 · adopt-standard — notes
 
 ## Builder decisions
