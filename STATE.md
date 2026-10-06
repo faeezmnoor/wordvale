@@ -1,6 +1,6 @@
 # STATE — WordVale
 <!-- layer: state · status: living · budget: 80 lines -->
-verified: 2026-10-06 at 32352b5 by `bun run check` exit 0, `bun .standard/standard-check.mjs .` exit 0, live URL README.md names (HTTP 200)
+verified: 2026-10-06 at bd6f5ad by `bun run check` exit 0, `bun .standard/standard-check.mjs .` exit 0, live URL README.md names (HTTP 200)
 
 ## Now
 - Live: the app at the URL README.md names; Iteration 1 (core loop) shipped 2026-08-12.
