@@ -14,6 +14,7 @@ verified: 2026-10-06 at bd6f5ad by `bun run check` exit 0, `bun .standard/standa
 1. Nothing planned. To resume: run `bun install && bun run check` (must be green), read docs/roadmap.md, pick a goal with the owner, then open a slice under docs/slices/.
 
 ## Blocked
+- reported: a code comment in src/ui/DebugHarness.tsx cites docs/gates.md, now archived; code is out of scope for this migration.
 - Nothing.
 - An untracked supabase/ folder exists locally; the owner decides whether it belongs in the repo.
 
@@ -21,6 +22,7 @@ verified: 2026-10-06 at bd6f5ad by `bun run check` exit 0, `bun .standard/standa
 - Paused side project; resume only on an owner-chosen goal (docs/roadmap.md).
 
 ## Owner items
+- The owner\'s first name appears in archived gate logs and records that pre-date the standard; decide whether to scrub them (public repository).
 1. Upload `public/og-image.png` as the repository's social preview image (repository Settings, General, Social preview). Browser only; everything else is done.
 2. Decide what to do with the untracked supabase/ folder (see Blocked).
 

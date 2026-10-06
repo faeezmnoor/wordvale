@@ -106,10 +106,10 @@ Read it first if you're contributing UI.
 ### The process, in the repo
 
 Unusually, how this got built is committed alongside the code in
-**[`docs/`](docs/)**: the [workflow contract](docs/workflow.md) and, for each
-iteration, the [plan](docs/iterations/01-core-loop/01-plan.md),
-[design spec](docs/iterations/01-core-loop/02-design.md) and
-[technical spec](docs/iterations/01-core-loop/03-tech-spec.md). Each stage has to
+**[`docs/`](docs/)**: the [workflow contract](docs/_archive/2026-10/workflow.md) and, for each
+iteration, the [plan](docs/records/slices/01-core-loop/01-plan.md),
+[design spec](docs/records/slices/01-core-loop/02-design.md) and
+[technical spec](docs/records/slices/01-core-loop/03-tech-spec.md). Each stage has to
 clear a review gate before the next one starts.
 
 ---
@@ -149,7 +149,7 @@ Issues and pull requests are welcome. A few invariants worth knowing:
 - Gameplay constants belong in [`economy.ts`](src/state/economy.ts) or
   [`config.ts`](src/engine/config.ts), not scattered inline.
 
-**[ROADMAP.md](ROADMAP.md)** groups every idea considered — harder puzzle modes, a
+**[ROADMAP.md](docs/records/roadmap-2026-08.md)** groups every idea considered — harder puzzle modes, a
 coin economy, growing plants where you solve, shareable puzzle links — with notes
 on where each would live in the code.
 
