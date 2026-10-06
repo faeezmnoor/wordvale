@@ -1,3 +1,4 @@
+<!-- layer: knowledge · status: living · verified: 2026-10-06 -->
 # ADR 001 — Grid & sprite rendering: DOM, behind a `<Grid>` boundary
 
 **Status:** accepted (2026-08-12) · **Timebox honored:** one-day spike, per council demotion
