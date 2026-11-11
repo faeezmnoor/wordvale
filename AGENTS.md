@@ -1,5 +1,5 @@
 # AGENTS.md — WordVale
-<!-- standard: 1.1.1 · tier: minimal · ui: yes · db: no · verified: 2026-10-06 -->
+<!-- standard: 1.6.1 · tier: minimal · ui: yes · db: no · verified: 2026-11-11 · audit: last 2026-11-11 · next 2027-05-11 -->
 
 ## 1. What this is
 - Browser-only crossword web app: paste a word list, generate a word-bank fill-in puzzle, review it, play it.
@@ -16,7 +16,7 @@
 ## 3. Read first, in this order (nothing else unless a brief cites it)
 1. STATE.md — what is live, next, blocked
 2. docs/roadmap.md — direction and idea areas (Minimal tier has no docs/README.md)
-3. The current slice's docs/slices/<id>/brief.md
+3. The current slice's docs/slices/<id>/brief.md (open slices only; closed ones are in docs/records/slices/)
 4. DESIGN.md before any visual or UI decision
 
 ## 4. Boundaries
@@ -47,6 +47,6 @@
 ## 8. Repo map
 - src/ — engine/ (generator), state/ (storage, economy), ui/ (screens), data/ (word packs)
 - tests/ — engine/ unit and property tests, e2e/ browser checks
-- docs/ — decisions/, runbooks/, slices/, records/ (closed work), _archive/ (superseded)
+- docs/ — decisions/, runbooks/, records/ (closed work, slices and reviews), _archive/ (superseded)
 - public/ — static assets (favicon, social preview image) · DESIGN.md — visual design system
 - .standard/ — vendored documentation lint · .github/workflows/ci.yml — CI
