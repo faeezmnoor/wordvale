@@ -1,3 +1,8 @@
+---
+status: accepted
+date: 2026-08-12
+decision-makers: the owner
+---
 <!-- layer: knowledge · status: living · verified: 2026-10-06 -->
 # ADR 001 — Grid & sprite rendering: DOM, behind a `<Grid>` boundary
 

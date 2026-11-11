@@ -1,5 +1,5 @@
 # AGENTS.md — WordVale
-<!-- standard: 1.6.0 · tier: minimal · ui: yes · db: no · verified: 2026-11-11 · audit: last 2026-11-11 · next 2027-05-11 -->
+<!-- standard: 1.6.1 · tier: minimal · ui: yes · db: no · verified: 2026-11-11 · audit: last 2026-11-11 · next 2027-05-11 -->
 
 ## 1. What this is
 - Browser-only crossword web app: paste a word list, generate a word-bank fill-in puzzle, review it, play it.
