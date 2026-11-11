@@ -1,6 +1,6 @@
 # STATE — WordVale
 <!-- layer: state · status: living · budget: 80 lines -->
-verified: 2026-10-06 at cb05950 by CI on PR #1 (Typecheck/lint/tests, Documentation standard, Vercel preview all green) and the reviewer cold-start test (pass)
+verified: 2026-11-11 at 98f8ed9 by bun run check exit 0, the CI run list and PR list read (PRs #1, #2 merged, none open); documentation lint 12 FAIL, all in records
 
 ## Now
 - Adopted the house standard at Minimal tier (PR #1, merged 2026-10-06): AGENTS.md, STATE.md, roadmap, records and archive, CI with the lint required on main.
